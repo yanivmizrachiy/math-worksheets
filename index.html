@@ -1,161 +1,136 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>דף עבודה - מקביליות במערכת הצירים</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דף עבודה - מקביליות במערכת הצירים</title>
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f8f9fa;
-            line-height: 1.6;
-        }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f0f4ff;
+    line-height: 1.6;
+}
 
-        h1, h2 {
-            text-align: center;
-        }
+h1, h2 {
+    text-align: center;
+}
 
-        .section {
-            background: white;
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 12px;
-            border: 1px solid #ccc;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
-        }
+.section {
+    background: white;
+    padding: 25px;
+    margin: 30px 0;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
 
-        .question {
-            margin-bottom: 25px;
-            padding: 15px;
-            background: #eef2ff;
-            border-radius: 8px;
-            border-right: 4px solid #4a57ff;
-        }
+.question {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #e3ecff;
+    border-radius: 10px;
+    border-right: 5px solid #4a57ff;
+}
 
-        .sub-question {
-            margin-top: 10px;
-        }
-        
-        .coordinates {
-            font-weight: bold;
-            display: block;
-            margin: 5px 0;
-        }
-    </style>
+.sub-question {
+    margin-top: 10px;
+}
+
+.coordinates {
+    font-weight: bold;
+    display: block;
+    margin: 5px 0;
+}
+
+canvas {
+    display: block;
+    margin: 15px auto;
+    max-width: 500px;
+    height: 400px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+</style>
 </head>
 <body>
 
 <h1>דף עבודה - מקביליות במערכת הצירים</h1>
 
 <div class="section">
-    <h2>שאלות גיאומטריה אנליטית (כיתה ט)</h2>
-    <p style="text-align: center; color: #555;">השאלות לקוחות מתוך חומר של מינהלת מל"מ ומשרד החינוך.</p>
+<h2>שאלות גיאומטריה אנליטית (כיתה ט)</h2>
+<p style="text-align:center; color:#555;">השאלות לקוחות מתוך חומר של מינהלת מל"מ ומשרד החינוך.</p>
 
-    <div class="question">
-        <p class="coordinates">**1.** קדקודים של מקבילית הם: $A(-5,2)$, $B(-3,6)$ ו- $D(1,2)$.</p>
-        <div class="sub-question">
-            **א.** מצאו את שיעורי הקדקוד $C$. (הרקע המשובץ ניתן רק לצורך בדיקה. חשבו כאילו אינו מופיע בסרטוט.)
-        </div>
-        <div class="sub-question">
-            **ב.** מצאו את המשוואה של הישר עליו מונח האלכסון $BD$.
-        </div>
-        <div class="sub-question">
-            **ג.** ענת העתיקה את המקבילית כך שהקדקוד $A$ עבר לראשית הצירים, והצלע $AD$ מונחת על ציר ה-$x$. מהם שיעורי הקדקודים האחרים?
-        </div>
-    </div>
-
-    <div class="question">
-        <p class="coordinates">**2.** שלושה קדקודים של מקבילית הם: $A(1,3)$, $B(-6,3)$ ו-$C(-2,0)$.</p>
-        <div class="sub-question">
-            **א.** מה שיעורי הקדקוד $D$?
-        </div>
-        <div class="sub-question">
-            **ב.** מהקדקוד $A$ מורידים גובה לצלע $CD$. הגובה פוגש את הצלע בנקודה $E$. מהם שיעורי הנקודה $E$?
-        </div>
-        <div class="sub-question">
-            **ג.** מה אורך הגובה $AE$? הסבירו.
-        </div>
-        <div class="sub-question">
-            **ד.** חשבו את שטח המקבילית.
-        </div>
-        <div class="sub-question">
-            **ה.** חשבו את היקף המקבילית. (היעזרו במשפט פיתגורס במשולש $AED$.)
-        </div>
-    </div>
-
-    <div class="question">
-        <p>
-            **3.** הצלע $AB$ של המקבילית $ABCD$ מונחת על ציר ה-$x$. הצלע $AD$ של המקבילית מונחת על הישר $y=x$ והקדקוד $C$ הוא $(7,3)$.
-        </p>
-        <div class="sub-question">
-            **א.** מצאו את שיעורי הקדקוד $A$.
-        </div>
-        <div class="sub-question">
-            **ב.** על איזה ישר מונחת הצלע $CD$?
-        </div>
-        <div class="sub-question">
-            **ג.** על איזה ישר מונחת הצלע $BC$?
-        </div>
-        <div class="sub-question">
-            **ד.** מה שטח המקבילית $ABCD$?
-        </div>
-    </div>
-
-    <div class="question">
-        <p class="coordinates">
-            **4.** שני קדקודים של המקבילית $ABCD$ הם $A(-2,3)$ ו- $B(-2,7)$, והצלע $CD$ מונחת על ציר ה-$y$.
-        </p>
-        <div class="sub-question">
-            **א.** האם הנתונים מאפשרים למצוא את היקף המקבילית? אם כן חשבו. אם לא הסבירו מדוע הנתונים לא מספיקים.
-        </div>
-        <div class="sub-question">
-            **ב.** האם הנתונים מאפשרים למצוא את שטח המקבילית? אם כן חשבו. אם לא הסבירו מדוע הנתונים לא מספיקים.
-        </div>
-    </div>
-
-    <div class="question">
-        <p>
-            **5.** במקבילית $ABCD$ הצלע $AB$ מונחת על הישר $\text{y}=3x+4$ והצלע $BC$ מונחת על הישר $\text{y}=x+2$. הקדקוד $D$ הוא $(1,-1)$.
-        </p>
-        <div class="sub-question">
-            **א.** מצאו את שיעורי הקדקוד $B$.
-        </div>
-        <div class="sub-question">
-            **ב.** מצאו את משוואות הישרים עליהן מונחות הצלעות $DC$ ו- $AD$.
-        </div>
-        <div class="sub-question">
-            **ג.** מצאו את משוואות האלכסון $AC$.
-        </div>
-    </div>
-
-    <div class="question">
-        <p class="coordinates">
-            **6.** במקבילית $ABCD$ נתונים הקדקודים $D(4,4)$ ו- $C(4,10)$. הצלע $BC$ מונחת על הישר $\text{y}=\frac{1}{2}x+8$ והאלכסון $BD$ מונח על הישר $\text{y}=8-x$.
-        </p>
-        <div class="sub-question">
-            **א.** מצאו את שיעורי הקדקוד $A$.
-        </div>
-        <div class="sub-question">
-            **ב.** מצאו את משוואות הישרים עליהם מונחות הצלעות $CD$, $AD$ ו- $AB$.
-        </div>
-        <div class="sub-question">
-            **ג.** מצאו את שיעורי הקדקוד $D$.
-        </div>
-        <div class="sub-question">
-            **ד.** מהו אורך הגובה מהקדקוד $B$ לצלע $CD$?
-        </div>
-        <div class="sub-question">
-            **ה.** בסרטוט מופיע הישר $\text{y}=5-x$, החותך את המקבילית $ABCD$ בנקודות $G$ ו- $H$. הוכיחו שהמשולשים $AGH$ ו- $ABD$ דומים.
-        </div>
-    </div>
+<div class="question">
+    <p class="coordinates">**1.** קדקודים של מקבילית: A(-5,2), B(-3,6), D(1,2)</p>
+    <div class="sub-question">א. מצאו את שיעורי הקדקוד C.</div>
+    <div class="sub-question">ב. מצאו את משוואת הישר BD.</div>
+    <div class="sub-question">ג. העבירו את A לראשית והצלע AD על ציר x. מה השיעורים החדשים?</div>
+    <canvas id="graph1"></canvas>
 </div>
 
+<div class="question">
+    <p class="coordinates">**2.** קדקודים: A(1,3), B(-6,3), C(-2,0)</p>
+    <div class="sub-question">א. מצאו את D.</div>
+    <div class="sub-question">ב. מה נקודת E (גובה מ-A ל-CD)?</div>
+    <div class="sub-question">ג. מה אורך הגובה AE?</div>
+    <div class="sub-question">ד. חשבו את שטח המקבילית.</div>
+    <div class="sub-question">ה. חשבו את ההיקף.</div>
+    <canvas id="graph2"></canvas>
+</div>
+
+</div>
+
+<script>
+// פונקציה לציור מקבילית לפי נקודות
+function drawParallelogram(canvasId, vertices) {
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
+
+    const xs = vertices.map(v => v[0]);
+    const ys = vertices.map(v => v[1]);
+    const minX = Math.min(...xs)-1;
+    const maxX = Math.max(...xs)+1;
+    const minY = Math.min(...ys)-1;
+    const maxY = Math.max(...ys)+1;
+
+    new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'מקבילית',
+                data: vertices.map(v => ({x:v[0], y:v[1]})),
+                showLine: true,
+                fill: true,
+                borderColor: '#4a57ff',
+                backgroundColor: 'rgba(74, 87, 255,0.2)',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: false,
+            scales: {
+                x: { type: 'linear', min: minX, max: maxX, title: {display:true, text:'X'} },
+                y: { type: 'linear', min: minY, max: maxY, title: {display:true, text:'Y'} }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+}
+
+// Example usage
+// Question 1 vertices: A, B, C, D
+drawParallelogram('graph1', [[-5,2], [-3,6], [3,6], [1,2]]);
+// Question 2 vertices: A, B, C, D
+drawParallelogram('graph2', [[1,3], [-6,3], [-2,-0], [3,0]]);
+
+</script>
 </body>
 </html>
