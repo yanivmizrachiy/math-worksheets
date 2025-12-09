@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>דף עבודה באלגברה וגיאומטריה</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto;
+      padding: 20px;
+      background: #f7f9fc;
+      color: #0b1220;
+    }
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    canvas {
+      width: 100% !important;
+      max-width: 500px;
+      height: auto !important;
+      display: block;
+      margin: 0 auto;
+    }
+
+    #downloadPDF {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 0;
+      background: #1f6feb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #downloadPDF:hover {
+      background: #1053c8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="pdfArea">
+  <h1>דף עבודה באלגברה וגיאומטריה</h1>
+
+  <div class="math-block">
+  <div>משוואת ישר:</div>
+  <div style="margin-top:8px; font-size:18px">\( y = m x + b \)</div>
+  <div style="margin-top:12px">
+    נוסחה למציאת השיפוע משני נקודות:  
+    \( m = \dfrac{y_2 - y_1}{x_2 - x_1} \)
+    </div>
+  </div>
+
+  <canvas id="lineChart"></canvas>
+
+  <button id="downloadPDF">הורדת PDF</button>
+</div>
+
+<script>
+  // Generate points
+  function makeLinePoints(m, b, xMin=0, xMax=3.5, step=0.1){
+    const xs = [], ys = [];
+    for (let x = xMin; x <= xMax; x += step) {
+      const y = m*x + b;
+      if (y >= 0 && y <= 10){
+        xs.push(x.toFixed(2));
+        ys.push(+y.toFixed(3));
+      }
+    }
+    return { xs, ys };
+  }
+
+  // Draw chart
+  const ctx = document.getElementById('lineChart');
+  const pts = makeLinePoints(2, 3);
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: pts.xs,
+      datasets: [{
+        label: "y = 2x + 3",
+        data: pts.ys,
+        borderWidth: 2,
+        pointRadius: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        x: { type: 'linear', min: 0, max: 3.5 },
+        y: { min: 0, max: 10 }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // PDF generation
+  document.getElementById('downloadPDF').addEventListener('click', async () => {
+    const area = document.getElementById('pdfArea');
+
+    const canvas = await html2canvas(area, {
+      scale: 3,        // SUPER SHARP
+      useCORS: true,
+      logging: false
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    const pdf = new jspdf.jsPDF("p", "mm", "a4");
+
+    const pageWidth = 210;
+    const imgWidth = pageWidth - 20;
+    const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+    pdf.addImage(imgData, 'JPEG', 10, 10, imgWidth, imgHeight);
+    pdf.save("worksheet.pdf");
+  });
+</script>
+
+</body>
+</html>
