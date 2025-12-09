@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>דף עבודה - מקביליות במערכת הצירים</title>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 body {
@@ -52,7 +52,7 @@ h1, h2 {
 canvas {
     display: block;
     margin: 15px auto;
-    max-width: 500px;
+    width: 500px;
     height: 400px;
     background: #fff;
     border: 1px solid #ccc;
@@ -68,35 +68,58 @@ canvas {
 <h2>שאלות גיאומטריה אנליטית (כיתה ט)</h2>
 <p style="text-align:center; color:#555;">השאלות לקוחות מתוך חומר של מינהלת מל"מ ומשרד החינוך.</p>
 
+<!-- Question 1 -->
 <div class="question">
-    <p class="coordinates">**1.** קדקודים של מקבילית: A(-5,2), B(-3,6), D(1,2)</p>
-    <div class="sub-question">א. מצאו את שיעורי הקדקוד C.</div>
-    <div class="sub-question">ב. מצאו את משוואת הישר BD.</div>
-    <div class="sub-question">ג. העבירו את A לראשית והצלע AD על ציר x. מה השיעורים החדשים?</div>
-    <canvas id="graph1"></canvas>
-</div>
-
-<div class="question">
-    <p class="coordinates">**2.** קדקודים: A(1,3), B(-6,3), C(-2,0)</p>
-    <div class="sub-question">א. מצאו את D.</div>
-    <div class="sub-question">ב. מה נקודת E (גובה מ-A ל-CD)?</div>
-    <div class="sub-question">ג. מה אורך הגובה AE?</div>
-    <div class="sub-question">ד. חשבו את שטח המקבילית.</div>
-    <div class="sub-question">ה. חשבו את ההיקף.</div>
-    <canvas id="graph2"></canvas>
-</div>
-
-</div>
-
-<script>
-// פונקציה לציור מקבילית לפי נקודות
+<p class="coordinates">**1.** קדקודים: A(-5,2), B(-3,6), D(1,2)</p>
+<div class="sub-question">א. מצאו את שיעורי הקדקוד C.</div>
+<div class="sub-question">ב. מצאו את משוואת הישר BD.</div>
+<div class="sub-question">ג. העבירו את A לראשית והצלע AD על ציר x. מה השיעורים החדשים?</div>
 <canvas id="graph1" width="500" height="400"></canvas>
+</div>
+
+<!-- Question 2 -->
+<div class="question">
+<p class="coordinates">**2.** קדקודים: A(1,3), B(-6,3), C(-2,0)</p>
+<div class="sub-question">א. מצאו את D.</div>
+<div class="sub-question">ב. מה נקודת E (גובה מ-A ל-CD)?</div>
+<div class="sub-question">ג. מה אורך הגובה AE?</div>
+<div class="sub-question">ד. חשבו את שטח המקבילית.</div>
+<div class="sub-question">ה. חשבו את ההיקף.</div>
+<canvas id="graph2" width="500" height="400"></canvas>
+</div>
+
+<!-- Question 3 -->
+<div class="question">
+<p class="coordinates">**3.** AB על ציר X, AD על y=x, C(7,3)</p>
+<canvas id="graph3" width="500" height="400"></canvas>
+</div>
+
+<!-- Question 4 -->
+<div class="question">
+<p class="coordinates">**4.** A(-2,3), B(-2,7), CD על ציר Y</p>
+<canvas id="graph4" width="500" height="400"></canvas>
+</div>
+
+<!-- Question 5 -->
+<div class="question">
+<p class="coordinates">**5.** AB על y=3x+4, BC על y=x+2, D(1,-1)</p>
+<canvas id="graph5" width="500" height="400"></canvas>
+</div>
+
+<!-- Question 6 -->
+<div class="question">
+<p class="coordinates">**6.** D(4,4), C(4,10), BC על y=0.5x+8, BD על y=8-x</p>
+<canvas id="graph6" width="500" height="400"></canvas>
+</div>
+
+</div>
 
 <script>
+// פונקציה לציור מקבילית
 function drawParallelogram(canvasId, vertices) {
     const ctx = document.getElementById(canvasId).getContext('2d');
 
-    // Add the first vertex at the end to close the shape
+    // Close the shape by adding first point at the end
     const closedVertices = vertices.concat([vertices[0]]);
 
     new Chart(ctx, {
@@ -108,23 +131,41 @@ function drawParallelogram(canvasId, vertices) {
                 showLine: true,
                 fill: true,
                 borderColor: '#4a57ff',
-                backgroundColor: 'rgba(74, 87, 255,0.2)',
+                backgroundColor: 'rgba(74,87,255,0.2)',
                 pointRadius: 5
             }]
         },
         options: {
-            responsive: false,  // fixed size
+            responsive: false,
             scales: {
-                x: { type: 'linear', title: {display:true, text:'X'}, min: Math.min(...vertices.map(v=>v[0]))-2, max: Math.max(...vertices.map(v=>v[0]))+2 },
-                y: { type: 'linear', title: {display:true, text:'Y'}, min: Math.min(...vertices.map(v=>v[1]))-2, max: Math.max(...vertices.map(v=>v[1]))+2 }
+                x: { 
+                    type: 'linear', 
+                    title: {display:true, text:'X'}, 
+                    min: Math.min(...vertices.map(v=>v[0]))-2, 
+                    max: Math.max(...vertices.map(v=>v[0]))+2 
+                },
+                y: { 
+                    type: 'linear', 
+                    title: {display:true, text:'Y'}, 
+                    min: Math.min(...vertices.map(v=>v[1]))-2, 
+                    max: Math.max(...vertices.map(v=>v[1]))+2 
+                }
             },
             plugins: { legend: { display: false } }
         }
     });
 }
 
-// Example: A, B, C, D for question 1
-drawParallelogram('graph1', [[-5,2], [-3,6], [3,6], [1,2]]);
+// Draw all parallelograms (example vertices, you can adjust)
+window.addEventListener('load', () => {
+    drawParallelogram('graph1', [[-5,2], [-3,6], [3,6], [1,2]]);
+    drawParallelogram('graph2', [[1,3], [-6,3], [-2,0], [3,0]]);
+    drawParallelogram('graph3', [[0,0], [7,7], [7,3], [0,3]]); // example
+    drawParallelogram('graph4', [[-2,3], [-2,7], [5,7], [5,3]]); // example
+    drawParallelogram('graph5', [[0,4], [1,-1], [5,1], [4,6]]); // example
+    drawParallelogram('graph6', [[2,2], [4,4], [4,10], [2,8]]); // example
+});
 </script>
+
 </body>
 </html>
