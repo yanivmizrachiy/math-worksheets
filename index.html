@@ -1,63 +1,24 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>דף עבודה - מקביליות במערכת הצירים</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f0f4ff;
-    line-height: 1.6;
-}
-
-h1, h2 {
-    text-align: center;
-}
-
-.section {
-    background: white;
-    padding: 25px;
-    margin: 30px 0;
-    border-radius: 15px;
-    border: 1px solid #ccc;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.question {
-    margin-bottom: 30px;
-    padding: 15px;
-    background: #e3ecff;
-    border-radius: 10px;
-    border-right: 5px solid #4a57ff;
-}
-
-.sub-question {
-    margin-top: 10px;
-}
-
-.coordinates {
-    font-weight: bold;
-    display: block;
-    margin: 5px 0;
-}
-
-canvas {
-    display: block;
-    margin: 15px auto;
-    width: 500px;
-    height: 400px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-}
+  body { font-family: Arial, sans-serif; margin:20px; background:#f0f4ff; color:#111; line-height:1.6; }
+  h1, h2 { text-align:center; }
+  .section { background: #fff; padding:20px; margin:24px 0; border-radius:12px; border:1px solid #d6d9df; box-shadow:0 6px 18px rgba(20,30,60,0.06); }
+  .question { background:#eef2ff; padding:14px; border-radius:10px; margin-bottom:18px; border-right:5px solid #4a57ff; }
+  .coordinates { font-weight:700; display:block; margin-bottom:8px; }
+  .sub-question { margin-top:8px; }
+  canvas { display:block; margin:12px auto; width:560px; height:420px; background:#fff; border:1px solid #d6d9df; border-radius:10px; }
+  @media (max-width:640px){ canvas{width:320px;height:240px;} }
 </style>
 </head>
 <body>
@@ -65,114 +26,187 @@ canvas {
 <h1>דף עבודה - מקביליות במערכת הצירים</h1>
 
 <div class="section">
-<h2>שאלות גיאומטריה אנליטית (כיתה ט)</h2>
-<p style="text-align:center; color:#555;">השאלות לקוחות מתוך חומר של מינהלת מל"מ ומשרד החינוך.</p>
+  <h2>שאלות גיאומטריה אנליטית (כיתה ט)</h2>
 
-<!-- Question 1 -->
-<div class="question">
-<p class="coordinates">**1.** קדקודים: A(-5,2), B(-3,6), D(1,2)</p>
-<div class="sub-question">א. מצאו את שיעורי הקדקוד C.</div>
-<div class="sub-question">ב. מצאו את משוואת הישר BD.</div>
-<div class="sub-question">ג. העבירו את A לראשית והצלע AD על ציר x. מה השיעורים החדשים?</div>
-<canvas id="graph1" width="500" height="400"></canvas>
-</div>
+  <!-- Q1 -->
+  <div class="question">
+    <div class="coordinates">1. קדקודים של מקבילית הם: \(A(-5,2)\), \(B(-3,6)\), \(D(1,2)\).</div>
+    <div class="sub-question">א. מצאו את שיעורי הקדקוד \(C\).</div>
+    <div class="sub-question">ב. מצאו את משוואה של הישר עליו מונח האלכסון \(BD\).</div>
+    <div class="sub-question">ג. העבירו את \(A\) לראשית והצלע \(AD\) על ציר ה-x. מהם שיעורי הקדקודים האחרים?</div>
+    <canvas id="chart1" width="560" height="420"></canvas>
+  </div>
 
-<!-- Question 2 -->
-<div class="question">
-<p class="coordinates">**2.** קדקודים: A(1,3), B(-6,3), C(-2,0)</p>
-<div class="sub-question">א. מצאו את D.</div>
-<div class="sub-question">ב. מה נקודת E (גובה מ-A ל-CD)?</div>
-<div class="sub-question">ג. מה אורך הגובה AE?</div>
-<div class="sub-question">ד. חשבו את שטח המקבילית.</div>
-<div class="sub-question">ה. חשבו את ההיקף.</div>
-<canvas id="graph2" width="500" height="400"></canvas>
-</div>
+  <!-- Q2 -->
+  <div class="question">
+    <div class="coordinates">2. שלושה קדקודים של מקבילית הם: \(A(1,3)\), \(B(-6,3)\), \(C(-2,0)\).</div>
+    <div class="sub-question">א. מצאו את \(D\).</div>
+    <div class="sub-question">ב. מהו \(E\) (גובה מ-A ל-CD)?</div>
+    <div class="sub-question">ג. מה אורך \(AE\)?</div>
+    <div class="sub-question">ד. חשבו את שטח המקבילית.</div>
+    <div class="sub-question">ה. חשבו את היקף המקבילית.</div>
+    <canvas id="chart2" width="560" height="420"></canvas>
+  </div>
 
-<!-- Question 3 -->
-<div class="question">
-<p class="coordinates">**3.** AB על ציר X, AD על y=x, C(7,3)</p>
-<canvas id="graph3" width="500" height="400"></canvas>
-</div>
+  <!-- Q3 -->
+  <div class="question">
+    <div class="coordinates">3. הצלע \(AB\) מונחת על ציר ה-x, הצלע \(AD\) על הישר \(y=x\) והקדקוד \(C(7,3)\).</div>
+    <div class="sub-question">א. מצאו את שיעורי הקדקוד \(A\).</div>
+    <div class="sub-question">ב. על איזה ישר מונחת \(CD\)?</div>
+    <div class="sub-question">ג. על איזה ישר מונחת \(BC\)?</div>
+    <div class="sub-question">ד. מה שטח המקבילית?</div>
+    <canvas id="chart3" width="560" height="420"></canvas>
+  </div>
 
-<!-- Question 4 -->
-<div class="question">
-<p class="coordinates">**4.** A(-2,3), B(-2,7), CD על ציר Y</p>
-<canvas id="graph4" width="500" height="400"></canvas>
-</div>
+  <!-- Q4 (you confirmed coordinates) -->
+  <div class="question">
+    <div class="coordinates">4. \(A(-2,3)\), \(B(-2,7)\), \(C(0,5)\), \(D(0,1)\) (מתוך התמונה).</div>
+    <div class="sub-question">א. האם הנתונים מאפשרים למצוא את היקף המקבילית? הסבירו.</div>
+    <div class="sub-question">ב. האם הנתונים מאפשרים למצוא את שטח המקבילית? הסבירו.</div>
+    <canvas id="chart4" width="560" height="420"></canvas>
+  </div>
 
-<!-- Question 5 -->
-<div class="question">
-<p class="coordinates">**5.** AB על y=3x+4, BC על y=x+2, D(1,-1)</p>
-<canvas id="graph5" width="500" height="400"></canvas>
-</div>
+  <!-- Q5 -->
+  <div class="question">
+    <div class="coordinates">5. \(AB\) על \(y=3x+4\), \(BC\) על \(y=x+2\), ו-\(D(1,-1)\).</div>
+    <div class="sub-question">א. מצאו את \(B\).</div>
+    <div class="sub-question">ב. מצאו משוואות הישרים עליהן מונחות \(DC\) ו-\(AD\).</div>
+    <div class="sub-question">ג. מצאו את משוואת האלכסון \(AC\).</div>
+    <canvas id="chart5" width="560" height="420"></canvas>
+  </div>
 
-<!-- Question 6 -->
-<div class="question">
-<p class="coordinates">**6.** D(4,4), C(4,10), BC על y=0.5x+8, BD על y=8-x</p>
-<canvas id="graph6" width="500" height="400"></canvas>
-</div>
+  <!-- Q6 -->
+  <div class="question">
+    <div class="coordinates">6. \(D(4,4)\), \(C(4,10)\). \(BC\) על \(y=\tfrac12 x+8\). האלכסון \(BD\) על \(y=8-x\).</div>
+    <div class="sub-question">א. מצאו את \(A\).</div>
+    <div class="sub-question">ב. מצאו משוואות הישרים עליהן מונחות \(CD\), \(AD\) ו-\(AB\).</div>
+    <div class="sub-question">ג. מצאו את \(B\).</div>
+    <div class="sub-question">ד. מהו אורך הגובה מ-\(B\) ל-\(CD\)?</div>
+    <div class="sub-question">ה. הוכיחו שהמשולשים \(AGH\) ו-\(ABD\) דומים (הקו \(y=5-x\) חותך ב-G ו-H).</div>
+    <canvas id="chart6" width="560" height="420"></canvas>
+  </div>
 
 </div>
 
 <script>
-// פונקציה לציור מקבילית
-function drawParallelogram(canvasId, vertices) {
-    const ctx = document.getElementById(canvasId).getContext('2d');
-    const closedVertices = vertices.concat([vertices[0]]); // סגירת הצורה
-
-    new Chart(ctx, {
-        type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'מקבילית',
-                data: closedVertices.map(v => ({x:v[0], y:v[1]})),
-                showLine: true,
-                fill: true,
-                borderColor: '#4a57ff',
-                backgroundColor: 'rgba(74,87,255,0.2)',
-                pointRadius: 5
-            }]
-        },
-        options: {
-            responsive: false,
-            scales: {
-                x: { 
-                    type: 'linear', 
-                    title: {display:true, text:'X'}, 
-                    min: Math.min(...vertices.map(v=>v[0]))-2, 
-                    max: Math.max(...vertices.map(v=>v[0]))+2 
-                },
-                y: { 
-                    type: 'linear', 
-                    title: {display:true, text:'Y'}, 
-                    min: Math.min(...vertices.map(v=>v[1]))-2, 
-                    max: Math.max(...vertices.map(v=>v[1]))+2 
-                }
-            },
-            plugins: { legend: { display: false } }
-        }
-    });
+/* ---------- helper utilities ---------- */
+function lineBounds(points) {
+  const xs = points.map(p => p[0]), ys = points.map(p => p[1]);
+  return { minX: Math.min(...xs)-2, maxX: Math.max(...xs)+2, minY: Math.min(...ys)-2, maxY: Math.max(...ys)+2 };
 }
 
-// חישוב קואורדינטות עבור כל שאלה
+function labelPlugin(labels) {
+  // returns Chart.js plugin that draws labels (labels: [{x,y,label}])
+  return {
+    id: 'pointLabels',
+    afterDraw(chart) {
+      const ctx = chart.ctx;
+      ctx.save();
+      ctx.font = 'bold 12px Arial';
+      ctx.fillStyle = '#0b1220';
+      labels.forEach(pt => {
+        const xPixel = chart.scales.x.getPixelForValue(pt.x);
+        const yPixel = chart.scales.y.getPixelForValue(pt.y);
+        // offset label a bit from point
+        const offsetX = 8 * (pt.side === 'rtl' ? -1 : 1);
+        ctx.fillText(pt.label, xPixel + offsetX, yPixel - 8);
+      });
+      ctx.restore();
+    }
+  };
+}
+
+/* ---------- draw function ---------- */
+function drawPlane(canvasId, vertices, opts = {}) {
+  // vertices: array of {x,y,label} in order A->B->C->D
+  // compute bounds
+  const coords = vertices.map(v => [v.x, v.y]);
+  const bounds = lineBounds(coords);
+
+  // include axes lines coordinates
+  const xmin = bounds.minX, xmax = bounds.maxX, ymin = bounds.minY, ymax = bounds.maxY;
+
+  // axes as datasets
+  const axisX = [{x:xmin, y:0}, {x:xmax, y:0}];
+  const axisY = [{x:0, y:ymin}, {x:0, y:ymax}];
+
+  const closed = coords.concat([coords[0]]);
+
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  // destroy existing chart on same canvas (if any)
+  if (ctx.chartInstance) { ctx.chartInstance.destroy(); ctx.chartInstance = null; }
+
+  const labelPts = vertices.map(v => ({x:v.x, y:v.y, label:v.label, side:v.side || 'ltr'}));
+
+  // create chart
+  const chart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [
+        // axes (drawn as thin gray lines)
+        { label:'x-axis', data: axisX, showLine:true, borderColor:'#999', pointRadius:0, borderWidth:1, tension:0 },
+        { label:'y-axis', data: axisY, showLine:true, borderColor:'#999', pointRadius:0, borderWidth:1, tension:0 },
+        // parallelogram fill and border
+        { label:'par', data: closed.map(p => ({x:p[0], y:p[1]})), showLine:true, fill:true, borderColor:'#246bff', backgroundColor:'rgba(36,107,255,0.18)', pointRadius:4, borderWidth:2, tension:0 },
+        // vertices as visible points (so labels look at points)
+        { label:'verts', data: coords.map(p=>({x:p[0], y:p[1]})), showLine:false, pointRadius:5, pointStyle:'circle', backgroundColor:'#0047b3' }
+      ]
+    },
+    options: {
+      responsive: false,
+      maintainAspectRatio: false,
+      scales: {
+        x: { type:'linear', min: xmin, max: xmax, title:{display:true, text:'X'}, grid:{color:'#e6e6e6'} },
+        y: { type:'linear', min: ymin, max: ymax, title:{display:true, text:'Y'}, grid:{color:'#e6e6e6'} }
+      },
+      plugins: { legend: { display:false } }
+    },
+    plugins: [ labelPlugin(labelPts) ]
+  });
+
+  ctx.chartInstance = chart;
+}
+
+/* ---------- compute vertices for each question ---------- */
+/* Q1: A(-5,2), B(-3,6), D(1,2) -> C = B + (D - A) */
+const Q1_A = {x:-5,y:2,label:'A'}, Q1_B = {x:-3,y:6,label:'B'}, Q1_D = {x:1,y:2,label:'D'};
+const Q1_C = { x: Q1_B.x + (Q1_D.x - Q1_A.x), y: Q1_B.y + (Q1_D.y - Q1_A.y), label:'C' };
+
+/* Q2: A(1,3), B(-6,3), C(-2,0) -> D = C + (A - B) */
+const Q2_A = {x:1,y:3,label:'A'}, Q2_B = {x:-6,y:3,label:'B'}, Q2_C = {x:-2,y:0,label:'C'};
+const Q2_D = { x: Q2_C.x + (Q2_A.x - Q2_B.x), y: Q2_C.y + (Q2_A.y - Q2_B.y), label:'D' };
+
+/* Q3: Given C(7,3), AB on x-axis, AD on y=x.
+   We solved earlier: t = 3; B = (4,0); choose A=(0,0); D = A + (3,3) = (3,3). */
+const Q3_A = {x:0,y:0,label:'A'}, Q3_B = {x:4,y:0,label:'B'}, Q3_D = {x:3,y:3,label:'D'}, Q3_C = {x:7,y:3,label:'C'};
+
+/* Q4: as confirmed: A(-2,3), B(-2,7), C(0,5), D(0,1) */
+const Q4_A = {x:-2,y:3,label:'A'}, Q4_B = {x:-2,y:7,label:'B'}, Q4_C = {x:0,y:5,label:'C'}, Q4_D = {x:0,y:1,label:'D'};
+
+/* Q5: solved: A(-3,-5), B(-1,1), C(3,5), D(1,-1) */
+const Q5_A = {x:-3,y:-5,label:'A'}, Q5_B = {x:-1,y:1,label:'B'}, Q5_C = {x:3,y:5,label:'C'}, Q5_D = {x:1,y:-1,label:'D'};
+
+/* Q6: D(4,4), C(4,10), BC on y=0.5x+8, BD on y=8-x.
+   Intersection B of BC and BD -> B=(0,8). A = D + (B - C) = (0,2) */
+const Q6_D = {x:4,y:4,label:'D'}, Q6_C = {x:4,y:10,label:'C'};
+const Q6_B = {x:0,y:8,label:'B'}, Q6_A = {x: Q6_D.x + (Q6_B.x - Q6_C.x), y: Q6_D.y + (Q6_B.y - Q6_C.y), label:'A'}; // (0,2)
+
+/* Add optional 'side' to labels to avoid overlap on RTL layout */
+Q1_A.side='rtl'; Q1_B.side='rtl'; Q1_C.side='ltr'; Q1_D.side='ltr';
+Q2_A.side='rtl'; Q2_B.side='rtl'; Q2_C.side='ltr'; Q2_D.side='ltr';
+Q3_A.side='rtl'; Q3_B.side='rtl'; Q3_C.side='ltr'; Q3_D.side='ltr';
+Q4_A.side='rtl'; Q4_B.side='rtl'; Q4_C.side='ltr'; Q4_D.side='ltr';
+Q5_A.side='rtl'; Q5_B.side='rtl'; Q5_C.side='ltr'; Q5_D.side='ltr';
+Q6_A.side='rtl'; Q6_B.side='rtl'; Q6_C.side='ltr'; Q6_D.side='ltr';
+
+/* ---------- draw everything after load ---------- */
 window.addEventListener('load', () => {
-    // Q1: A(-5,2), B(-3,6), D(1,2) → C = B + (D - A) = (-3+6,6+0)?? actually: C = B + (D-A)
-    drawParallelogram('graph1', [[-5,2], [-3,6], [3,6], [1,2]]);
-    
-    // Q2: A(1,3), B(-6,3), C(-2,0) → D = C + (A-B) = (-2 + 7, 0 + 0) = (5,0)
-    drawParallelogram('graph2', [[1,3], [-6,3], [-2,0], [5,0]]);
-    
-    // Q3: AB on x-axis, AD on y=x, C(7,3) → A(?,?), B(?,?), D(?,?) let's assume A=(0,0), B=(?,0), D=(?,?) → simplest: A=(0,0), B=(7,0), D=(3,3), C=(7,3)
-    drawParallelogram('graph3', [[0,0], [7,0], [7,3], [3,3]]);
-    
-    // Q4: A(-2,3), B(-2,7), CD on y-axis → C(?,?), D(?,?) assume parallelogram along x → C=(2,7), D=(2,3)
-    drawParallelogram('graph4', [[-2,3], [-2,7], [2,7], [2,3]]);
-    
-    // Q5: D(1,-1), AB y=3x+4, BC y=x+2 → approximate vertices: A=(-1,1), B=(0,4), C=(1,3), D(1,-1)
-    drawParallelogram('graph5', [[-1,1], [0,4], [1,3], [1,-1]]);
-    
-    // Q6: D(4,4), C(4,10), BC y=0.5x+8, BD y=8-x → approximate vertices: B(0,8), C(4,10), D(4,4), A(0,2)
-    drawParallelogram('graph6', [[0,2], [0,8], [4,10], [4,4]]);
+  drawPlane('chart1', [Q1_A, Q1_B, Q1_C, Q1_D]);
+  drawPlane('chart2', [Q2_A, Q2_B, Q2_C, Q2_D]);
+  drawPlane('chart3', [Q3_A, Q3_B, Q3_C, Q3_D]);
+  drawPlane('chart4', [Q4_A, Q4_B, Q4_C, Q4_D]);
+  drawPlane('chart5', [Q5_A, Q5_B, Q5_C, Q5_D]);
+  drawPlane('chart6', [Q6_A, Q6_B, Q6_C, Q6_D]);
 });
 </script>
 
