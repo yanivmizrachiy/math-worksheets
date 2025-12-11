@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>דף עבודה - מקביליות במערכת הצירים</title>
+<title>math worksheets</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -15,32 +15,66 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-  body { font-family: Arial, sans-serif; margin:20px; background:#f0f4ff; color:#111; line-height:1.6; }
-  h1, h2 { text-align:center; }
-  .section { background: #fff; padding:20px; margin:24px 0; border-radius:12px; border:1px solid #d6d9df; box-shadow:0 6px 18px rgba(20,30,60,0.06); }
-  .question { background:#eef2ff; padding:14px; border-radius:10px; margin-bottom:18px; border-right:5px solid #4a57ff; }
-  .coordinates { font-weight:700; display:block; margin-bottom:8px; }
-  .sub-question { margin-top:8px; }
-  canvas { display:block; margin:12px auto; width:560px; height:420px; background:#fff; border:1px solid #d6d9df; border-radius:10px; }
-  @media (max-width:640px){ canvas{width:320px;height:240px;} }
+  body { 
+    font-family: Arial, sans-serif; 
+    margin: 20px; 
+    background: #ffffff; 
+    color: #000000; 
+    line-height: 1.6; 
+  }
+  h1, h2 { text-align: center; color: #000; }
+  
+  .section { 
+    background: #ffffff; 
+    padding: 20px; 
+    margin: 24px 0; 
+    border-radius: 12px; 
+    border: 1px solid #000000; 
+    box-shadow: none; 
+  }
+  
+  .question { 
+    background: #ffffff; 
+    padding: 14px; 
+    border-radius: 10px; 
+    margin-bottom: 18px; 
+    border-right: 5px solid #000000; 
+  }
+  
+  .coordinates { font-weight: 700; display: block; margin-bottom: 8px; color: #000; }
+  .sub-question { margin-top: 8px; color: #000; }
+  
+  canvas { 
+    display: block; 
+    margin: 12px auto; 
+    width: 560px; 
+    height: 420px; 
+    background: #ffffff; 
+    border: 1px solid #000000; 
+    border-radius: 10px; 
+  }
+  
+  @media (max-width: 640px){ 
+    canvas { width: 320px; height: 240px; } 
+  }
 
   #pdfButton {
-    padding:12px 20px;
-    background:#4a57ff;
-    color:white;
-    font-size:16px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    display:block;
-    margin:20px auto;
+    padding: 12px 20px;
+    background: #000000;
+    color: #ffffff;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
   }
 </style>
 </head>
 <body>
 
 <!-- PDF BUTTON -->
-<button id="pdfButton" onclick="downloadPDF()">📄 הורד כ-PDF (2 שאלות בעמוד)</button>
+<button id="pdfButton" onclick="downloadPDF()">📄 הורד כ-PDF </button>
 
 <h1>דף עבודה - מקביליות במערכת הצירים</h1>
 
@@ -107,14 +141,13 @@
 
 </div>
 
-<!-- ⭐ FINAL FIXED PDF EXPORTER (2 questions per page, NO CLIPPING) -->
+<!-- ⭐ PDF EXPORTER -->
 <script>
 async function downloadPDF() {
     const { jsPDF } = window.jspdf;
 
     const questions = Array.from(document.querySelectorAll(".question"));
 
-    // group questions into chunks of 2
     const groups = [];
     for (let i=0; i < questions.length; i += 2) {
         const pair = [questions[i]];
@@ -128,23 +161,20 @@ async function downloadPDF() {
 
     for (let g = 0; g < groups.length; g++) {
 
-        // create clean render container
         const temp = document.createElement("div");
         temp.style.direction = "rtl";
         temp.style.width = "900px";
         temp.style.padding = "40px";
-        temp.style.background = "#f0f4ff";
+        temp.style.background = "#ffffff";
         temp.style.boxSizing = "border-box";
         temp.style.position = "fixed";
         temp.style.left = "-2000px";
         temp.style.top = "0";
         document.body.appendChild(temp);
 
-        // clone the 2 questions
         for (const el of groups[g]) {
             const clone = el.cloneNode(true);
 
-            // fix canvas by converting chart canvases to images
             const origCanvas = el.querySelector("canvas");
             if (origCanvas) {
                 try {
@@ -161,7 +191,6 @@ async function downloadPDF() {
             temp.appendChild(clone);
         }
 
-        // render group → canvas
         const canvas = await html2canvas(temp, {
             scale: 2,
             useCORS: true,
@@ -173,7 +202,6 @@ async function downloadPDF() {
         const imgW = pdfW;
         const imgH = (canvas.height * pdfW) / canvas.width;
 
-        // auto-scale if too tall
         let finalW = imgW;
         let finalH = imgH;
 
@@ -194,10 +222,10 @@ async function downloadPDF() {
 }
 </script>
 
-<!-- DRAWING CODE (unchanged) -->
+<!-- DRAWING CODE -->
 <script>
 function lineBounds(points){const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);return{minX:Math.min(...xs)-2,maxX:Math.max(...xs)+2,minY:Math.min(...ys)-2,maxY:Math.max(...ys)+2};}
-function labelPlugin(labels){return{id:'pointLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='bold 12px Arial';ctx.fillStyle='#0b1220';labels.forEach(pt=>{const xp=chart.scales.x.getPixelForValue(pt.x),yp=chart.scales.y.getPixelForValue(pt.y);const off=8*(pt.side==='rtl'?-1:1);ctx.fillText(pt.label,xp+off,yp-8);});ctx.restore();}};}
+function labelPlugin(labels){return{id:'pointLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='bold 12px Arial';ctx.fillStyle='#000';labels.forEach(pt=>{const xp=chart.scales.x.getPixelForValue(pt.x),yp=chart.scales.y.getPixelForValue(pt.y);const off=8*(pt.side==='rtl'?-1:1);ctx.fillText(pt.label,xp+off,yp-8);});ctx.restore();}};}
 
 function drawPlane(canvasId,vertices){
   const coords=vertices.map(v=>[v.x,v.y]);
@@ -213,20 +241,20 @@ function drawPlane(canvasId,vertices){
   const chart=new Chart(ctx,{
     type:'scatter',
     data:{datasets:[
-      {data:axisX,showLine:true,borderColor:'#999',pointRadius:0,borderWidth:1},
-      {data:axisY,showLine:true,borderColor:'#999',pointRadius:0,borderWidth:1},
+      {data:axisX,showLine:true,borderColor:'#000',pointRadius:0,borderWidth:1},
+      {data:axisY,showLine:true,borderColor:'#000',pointRadius:0,borderWidth:1},
       {data:closed.map(p=>({x:p[0],y:p[1]})),showLine:true,fill:true,
-       borderColor:'#246bff',backgroundColor:'rgba(36,107,255,0.18)',
+       borderColor:'#000', backgroundColor:'rgba(0,0,0,0.1)',
        pointRadius:4,borderWidth:2},
       {data:coords.map(p=>({x:p[0],y:p[1]})),showLine:false,
-       pointRadius:5,backgroundColor:'#0047b3'}
+       pointRadius:5, backgroundColor:'#000'}
     ]},
     options:{
       responsive:false,
       maintainAspectRatio:false,
       scales:{
-        x:{min:xmin,max:xmax,grid:{color:'#e6e6e6'}},
-        y:{min:ymin,max:ymax,grid:{color:'#e6e6e6'}}
+        x:{min:xmin,max:xmax,grid:{color:'#cccccc'}},
+        y:{min:ymin,max:ymax,grid:{color:'#cccccc'}}
       },
       plugins:{legend:{display:false}}
     },
