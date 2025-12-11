@@ -10,6 +10,10 @@
 <script id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
+<!-- 🔹 PDF libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
   body { font-family: Arial, sans-serif; margin:20px; background:#f0f4ff; color:#111; line-height:1.6; }
   h1, h2 { text-align:center; }
@@ -19,9 +23,25 @@
   .sub-question { margin-top:8px; }
   canvas { display:block; margin:12px auto; width:560px; height:420px; background:#fff; border:1px solid #d6d9df; border-radius:10px; }
   @media (max-width:640px){ canvas{width:320px;height:240px;} }
+
+  /* 🔹 PDF button style */
+  #pdfButton {
+    padding:12px 20px;
+    background:#4a57ff;
+    color:white;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    display:block;
+    margin:20px auto;
+  }
 </style>
 </head>
 <body>
+
+<!-- 🔹 PDF DOWNLOAD BUTTON -->
+<button id="pdfButton" onclick="downloadPDF()">📄 הורד כ-PDF</button>
 
 <h1>דף עבודה - מקביליות במערכת הצירים</h1>
 
@@ -58,7 +78,7 @@
     <canvas id="chart3" width="560" height="420"></canvas>
   </div>
 
-  <!-- Q4 (you confirmed coordinates) -->
+  <!-- Q4 -->
   <div class="question">
     <div class="coordinates">4. \(A(-2,3)\), \(B(-2,7)\), \(C(0,5)\), \(D(0,1)\) (מתוך התמונה).</div>
     <div class="sub-question">א. האם הנתונים מאפשרים למצוא את היקף המקבילית? הסבירו.</div>
@@ -82,13 +102,30 @@
     <div class="sub-question">ב. מצאו משוואות הישרים עליהן מונחות \(CD\), \(AD\) ו-\(AB\).</div>
     <div class="sub-question">ג. מצאו את \(B\).</div>
     <div class="sub-question">ד. מהו אורך הגובה מ-\(B\) ל-\(CD\)?</div>
-    <div class="sub-question">ה. הוכיחו שהמשולשים \(AGH\) ו-\(ABD\) דומים (הקו \(y=5-x\) חותך ב-G ו-H).</div>
+    <div class="sub-question">ה. הוכיחו שהמשולשים \(AGH\) ו-\(ABD\) דומים.</div>
     <canvas id="chart6" width="560" height="420"></canvas>
   </div>
 
 </div>
 
 <script>
+/* ---------- PDF FUNCTION ---------- */
+async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+
+    const element = document.body; // export full page
+    const canvas = await html2canvas(element, { scale: 2 });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const pdfWidth = 210;
+    const pdfHeight = (canvas.height * 210) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("worksheet.pdf");
+}
+
 /* ---------- helper utilities ---------- */
 function lineBounds(points) {
   const xs = points.map(p => p[0]), ys = points.map(p => p[1]);
@@ -96,7 +133,6 @@ function lineBounds(points) {
 }
 
 function labelPlugin(labels) {
-  // returns Chart.js plugin that draws labels (labels: [{x,y,label}])
   return {
     id: 'pointLabels',
     afterDraw(chart) {
@@ -107,7 +143,6 @@ function labelPlugin(labels) {
       labels.forEach(pt => {
         const xPixel = chart.scales.x.getPixelForValue(pt.x);
         const yPixel = chart.scales.y.getPixelForValue(pt.y);
-        // offset label a bit from point
         const offsetX = 8 * (pt.side === 'rtl' ? -1 : 1);
         ctx.fillText(pt.label, xPixel + offsetX, yPixel - 8);
       });
@@ -116,97 +151,77 @@ function labelPlugin(labels) {
   };
 }
 
-/* ---------- draw function ---------- */
 function drawPlane(canvasId, vertices, opts = {}) {
-  // vertices: array of {x,y,label} in order A->B->C->D
-  // compute bounds
   const coords = vertices.map(v => [v.x, v.y]);
   const bounds = lineBounds(coords);
-
-  // include axes lines coordinates
   const xmin = bounds.minX, xmax = bounds.maxX, ymin = bounds.minY, ymax = bounds.maxY;
 
-  // axes as datasets
   const axisX = [{x:xmin, y:0}, {x:xmax, y:0}];
   const axisY = [{x:0, y:ymin}, {x:0, y:ymax}];
 
   const closed = coords.concat([coords[0]]);
 
   const ctx = document.getElementById(canvasId).getContext('2d');
-  // destroy existing chart on same canvas (if any)
-  if (ctx.chartInstance) { ctx.chartInstance.destroy(); ctx.chartInstance = null; }
+  if (ctx.chartInstance) ctx.chartInstance.destroy();
 
   const labelPts = vertices.map(v => ({x:v.x, y:v.y, label:v.label, side:v.side || 'ltr'}));
 
-  // create chart
   const chart = new Chart(ctx, {
     type: 'scatter',
     data: {
       datasets: [
-        // axes (drawn as thin gray lines)
-        { label:'x-axis', data: axisX, showLine:true, borderColor:'#999', pointRadius:0, borderWidth:1, tension:0 },
-        { label:'y-axis', data: axisY, showLine:true, borderColor:'#999', pointRadius:0, borderWidth:1, tension:0 },
-        // parallelogram fill and border
-        { label:'par', data: closed.map(p => ({x:p[0], y:p[1]})), showLine:true, fill:true, borderColor:'#246bff', backgroundColor:'rgba(36,107,255,0.18)', pointRadius:4, borderWidth:2, tension:0 },
-        // vertices as visible points (so labels look at points)
-        { label:'verts', data: coords.map(p=>({x:p[0], y:p[1]})), showLine:false, pointRadius:5, pointStyle:'circle', backgroundColor:'#0047b3' }
+        { data: axisX, showLine:true, borderColor:'#999', pointRadius:0, borderWidth:1 },
+        { data: axisY, showLine:true, borderColor:'#999', pointRadius:0, borderWidth:1 },
+        { data: closed.map(p => ({x:p[0], y:p[1]})), showLine:true, fill:true,
+          borderColor:'#246bff', backgroundColor:'rgba(36,107,255,0.18)', pointRadius:4, borderWidth:2 },
+        { data: coords.map(p=>({x:p[0], y:p[1]})), showLine:false, pointRadius:5, backgroundColor:'#0047b3' }
       ]
     },
     options: {
-      responsive: false,
-      maintainAspectRatio: false,
-      scales: {
-        x: { type:'linear', min: xmin, max: xmax, title:{display:true, text:'X'}, grid:{color:'#e6e6e6'} },
-        y: { type:'linear', min: ymin, max: ymax, title:{display:true, text:'Y'}, grid:{color:'#e6e6e6'} }
+      responsive:false,
+      maintainAspectRatio:false,
+      scales:{
+        x:{min:xmin, max:xmax, grid:{color:'#e6e6e6'}},
+        y:{min:ymin, max:ymax, grid:{color:'#e6e6e6'}}
       },
-      plugins: { legend: { display:false } }
+      plugins:{legend:{display:false}}
     },
-    plugins: [ labelPlugin(labelPts) ]
+    plugins:[labelPlugin(labelPts)]
   });
 
   ctx.chartInstance = chart;
 }
 
-/* ---------- compute vertices for each question ---------- */
-/* Q1: A(-5,2), B(-3,6), D(1,2) -> C = B + (D - A) */
-const Q1_A = {x:-5,y:2,label:'A'}, Q1_B = {x:-3,y:6,label:'B'}, Q1_D = {x:1,y:2,label:'D'};
-const Q1_C = { x: Q1_B.x + (Q1_D.x - Q1_A.x), y: Q1_B.y + (Q1_D.y - Q1_A.y), label:'C' };
+/* ---------- compute vertices ---------- */
+const Q1_A={x:-5,y:2,label:'A'},Q1_B={x:-3,y:6,label:'B'},Q1_D={x:1,y:2,label:'D'};
+const Q1_C={x:Q1_B.x+(Q1_D.x-Q1_A.x),y:Q1_B.y+(Q1_D.y-Q1_A.y),label:'C'};
 
-/* Q2: A(1,3), B(-6,3), C(-2,0) -> D = C + (A - B) */
-const Q2_A = {x:1,y:3,label:'A'}, Q2_B = {x:-6,y:3,label:'B'}, Q2_C = {x:-2,y:0,label:'C'};
-const Q2_D = { x: Q2_C.x + (Q2_A.x - Q2_B.x), y: Q2_C.y + (Q2_A.y - Q2_B.y), label:'D' };
+const Q2_A={x:1,y:3,label:'A'},Q2_B={x:-6,y:3,label:'B'},Q2_C={x:-2,y:0,label:'C'};
+const Q2_D={x:Q2_C.x+(Q2_A.x-Q2_B.x),y:Q2_C.y+(Q2_A.y-Q2_B.y),label:'D'};
 
-/* Q3: Given C(7,3), AB on x-axis, AD on y=x.
-   We solved earlier: t = 3; B = (4,0); choose A=(0,0); D = A + (3,3) = (3,3). */
-const Q3_A = {x:0,y:0,label:'A'}, Q3_B = {x:4,y:0,label:'B'}, Q3_D = {x:3,y:3,label:'D'}, Q3_C = {x:7,y:3,label:'C'};
+const Q3_A={x:0,y:0,label:'A'},Q3_B={x:4,y:0,label:'B'},Q3_D={x:3,y:3,label:'D'},Q3_C={x:7,y:3,label:'C'};
 
-/* Q4: as confirmed: A(-2,3), B(-2,7), C(0,5), D(0,1) */
-const Q4_A = {x:-2,y:3,label:'A'}, Q4_B = {x:-2,y:7,label:'B'}, Q4_C = {x:0,y:5,label:'C'}, Q4_D = {x:0,y:1,label:'D'};
+const Q4_A={x:-2,y:3,label:'A'},Q4_B={x:-2,y:7,label:'B'},Q4_C={x:0,y:5,label:'C'},Q4_D={x:0,y:1,label:'D'};
 
-/* Q5: solved: A(-3,-5), B(-1,1), C(3,5), D(1,-1) */
-const Q5_A = {x:-3,y:-5,label:'A'}, Q5_B = {x:-1,y:1,label:'B'}, Q5_C = {x:3,y:5,label:'C'}, Q5_D = {x:1,y:-1,label:'D'};
+const Q5_A={x:-3,y:-5,label:'A'},Q5_B={x:-1,y:1,label:'B'},Q5_C={x:3,y:5,label:'C'},Q5_D={x:1,y:-1,label:'D'};
 
-/* Q6: D(4,4), C(4,10), BC on y=0.5x+8, BD on y=8-x.
-   Intersection B of BC and BD -> B=(0,8). A = D + (B - C) = (0,2) */
-const Q6_D = {x:4,y:4,label:'D'}, Q6_C = {x:4,y:10,label:'C'};
-const Q6_B = {x:0,y:8,label:'B'}, Q6_A = {x: Q6_D.x + (Q6_B.x - Q6_C.x), y: Q6_D.y + (Q6_B.y - Q6_C.y), label:'A'}; // (0,2)
+const Q6_D={x:4,y:4,label:'D'},Q6_C={x:4,y:10,label:'C'};
+const Q6_B={x:0,y:8,label:'B'},Q6_A={x:0,y:2,label:'A'};
 
-/* Add optional 'side' to labels to avoid overlap on RTL layout */
-Q1_A.side='rtl'; Q1_B.side='rtl'; Q1_C.side='ltr'; Q1_D.side='ltr';
-Q2_A.side='rtl'; Q2_B.side='rtl'; Q2_C.side='ltr'; Q2_D.side='ltr';
-Q3_A.side='rtl'; Q3_B.side='rtl'; Q3_C.side='ltr'; Q3_D.side='ltr';
-Q4_A.side='rtl'; Q4_B.side='rtl'; Q4_C.side='ltr'; Q4_D.side='ltr';
-Q5_A.side='rtl'; Q5_B.side='rtl'; Q5_C.side='ltr'; Q5_D.side='ltr';
-Q6_A.side='rtl'; Q6_B.side='rtl'; Q6_C.side='ltr'; Q6_D.side='ltr';
+Q1_A.side='rtl';Q1_B.side='rtl';Q1_C.side='ltr';Q1_D.side='ltr';
+Q2_A.side='rtl';Q2_B.side='rtl';Q2_C.side='ltr';Q2_D.side='ltr';
+Q3_A.side='rtl';Q3_B.side='rtl';Q3_C.side='ltr';Q3_D.side='ltr';
+Q4_A.side='rtl';Q4_B.side='rtl';Q4_C.side='ltr';Q4_D.side='ltr';
+Q5_A.side='rtl';Q5_B.side='rtl';Q5_C.side='ltr';Q5_D.side='ltr';
+Q6_A.side='rtl';Q6_B.side='rtl';Q6_C.side='ltr';Q6_D.side='ltr';
 
-/* ---------- draw everything after load ---------- */
-window.addEventListener('load', () => {
-  drawPlane('chart1', [Q1_A, Q1_B, Q1_C, Q1_D]);
-  drawPlane('chart2', [Q2_A, Q2_B, Q2_C, Q2_D]);
-  drawPlane('chart3', [Q3_A, Q3_B, Q3_C, Q3_D]);
-  drawPlane('chart4', [Q4_A, Q4_B, Q4_C, Q4_D]);
-  drawPlane('chart5', [Q5_A, Q5_B, Q5_C, Q5_D]);
-  drawPlane('chart6', [Q6_A, Q6_B, Q6_C, Q6_D]);
+window.addEventListener('load',()=>{
+  drawPlane('chart1',[Q1_A,Q1_B,Q1_C,Q1_D]);
+  drawPlane('chart2',[Q2_A,Q2_B,Q2_C,Q2_D]);
+  drawPlane('chart3',[Q3_A,Q3_B,Q3_C,Q3_D]);
+  drawPlane('chart4',[Q4_A,Q4_B,Q4_C,Q4_D]);
+  drawPlane('chart5',[Q5_A,Q5_B,Q5_C,Q5_D]);
+  drawPlane('chart6',[Q6_A,Q6_B,Q6_C,Q6_D]);
 });
 </script>
 
