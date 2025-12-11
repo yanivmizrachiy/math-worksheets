@@ -40,7 +40,7 @@
 <body>
 
 <!-- PDF BUTTON -->
-<button id="pdfButton" onclick="downloadPDF()">📄 הורד כ-PDF</button>
+<button id="pdfButton" onclick="downloadPDF()">📄 הורד כ-PDF (2 שאלות בעמוד)</button>
 
 <h1>דף עבודה - מקביליות במערכת הצירים</h1>
 
@@ -107,45 +107,96 @@
 
 </div>
 
-<!-- MULTI-PAGE PDF EXPORT -->
+<!-- MULTI-PAGE (2 QUESTIONS PER PAGE) PDF EXPORT -->
 <script>
 async function downloadPDF() {
-    const { jsPDF } = window.jspdf;
+  const { jsPDF } = window.jspdf;
 
-    const element = document.body;
+  // gather questions
+  const questionElems = Array.from(document.querySelectorAll('.question'));
 
-    const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true
-    });
+  // group into batches of 2
+  const batches = [];
+  for (let i = 0; i < questionElems.length; i += 2) {
+    const group = [questionElems[i]];
+    if (i + 1 < questionElems.length) group.push(questionElems[i + 1]);
+    batches.push(group);
+  }
 
-    const imgData = canvas.toDataURL("image/png");
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const pdfWidth = 210;
+  const pdfHeight = 297;
 
-    const pdf = new jsPDF("p", "mm", "a4");
-    const pdfWidth = 210;
-    const pdfHeight = 297;
+  for (let b = 0; b < batches.length; b++) {
+    // create a temporary container to hold the two questions side-by-side vertically
+    const temp = document.createElement('div');
+    // Use RTL direction to match layout and set white background
+    temp.style.direction = 'rtl';
+    temp.style.width = '800px';              // fixed width for consistent rendering
+    temp.style.padding = '20px';
+    temp.style.background = '#f0f4ff';
+    temp.style.boxSizing = 'border-box';
+    temp.style.display = 'block';
+
+    // clone and append the group's elements
+    for (const el of batches[b]) {
+      const clone = el.cloneNode(true);
+      // ensure canvases are visible in cloned node: copy the actual canvas pixels
+      const canvases = el.querySelectorAll('canvas');
+      if (canvases.length) {
+        // for each canvas in original, copy image to cloned canvas after html2canvas capture step
+        // we'll replace the canvas element in the clone with an <img> later
+      }
+      temp.appendChild(clone);
+    }
+
+    // hide offscreen
+    temp.style.position = 'fixed';
+    temp.style.left = '-2000px';
+    temp.style.top = '0px';
+    document.body.appendChild(temp);
+
+    // Before capturing, replace cloned canvas elements with images taken from original canvases
+    const clonedCanvases = temp.querySelectorAll('canvas');
+    for (let i = 0; i < clonedCanvases.length; i++) {
+      const origCanvas = batches[b][ Math.floor(i/1) ].querySelectorAll('canvas')[0];
+      if (origCanvas) {
+        try {
+          const dataUrl = origCanvas.toDataURL('image/png');
+          const img = document.createElement('img');
+          img.src = dataUrl;
+          img.style.display = 'block';
+          img.style.maxWidth = '100%';
+          img.style.height = 'auto';
+          // replace cloned canvas with image
+          clonedCanvases[i].parentNode.replaceChild(img, clonedCanvases[i]);
+        } catch (e) {
+          // fallback: leave canvas as-is (should rarely happen)
+        }
+      }
+    }
+
+    // render the temp element
+    // use a higher scale for better quality
+    const canvas = await html2canvas(temp, { scale: 2, useCORS: true, backgroundColor: null });
+
+    // cleanup cloned node
+    document.body.removeChild(temp);
+
+    const imgData = canvas.toDataURL('image/png');
 
     const imgWidth = pdfWidth;
     const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    let heightLeft = imgHeight;
-    let position = 0;
+    if (b > 0) pdf.addPage();
+    // center the image vertically on the A4 page if imgHeight < pdfHeight
+    const yOffset = imgHeight < pdfHeight ? (pdfHeight - imgHeight) / 2 : 0;
+    pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
+  }
 
-    // first page
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pdfHeight;
-
-    while (heightLeft > 0) {
-        pdf.addPage();
-        position = - (imgHeight - heightLeft);
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pdfHeight;
-    }
-
-    pdf.save("worksheet.pdf");
+  pdf.save('worksheet.pdf');
 }
 </script>
-
 
 <!-- DRAWING CODE (unchanged) -->
 <script>
