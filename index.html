@@ -107,94 +107,90 @@
 
 </div>
 
-<!-- MULTI-PAGE (2 QUESTIONS PER PAGE) PDF EXPORT -->
+<!-- ⭐ FINAL FIXED PDF EXPORTER (2 questions per page, NO CLIPPING) -->
 <script>
 async function downloadPDF() {
-  const { jsPDF } = window.jspdf;
+    const { jsPDF } = window.jspdf;
 
-  // gather questions
-  const questionElems = Array.from(document.querySelectorAll('.question'));
+    const questions = Array.from(document.querySelectorAll(".question"));
 
-  // group into batches of 2
-  const batches = [];
-  for (let i = 0; i < questionElems.length; i += 2) {
-    const group = [questionElems[i]];
-    if (i + 1 < questionElems.length) group.push(questionElems[i + 1]);
-    batches.push(group);
-  }
-
-  const pdf = new jsPDF('p', 'mm', 'a4');
-  const pdfWidth = 210;
-  const pdfHeight = 297;
-
-  for (let b = 0; b < batches.length; b++) {
-    // create a temporary container to hold the two questions side-by-side vertically
-    const temp = document.createElement('div');
-    // Use RTL direction to match layout and set white background
-    temp.style.direction = 'rtl';
-    temp.style.width = '800px';              // fixed width for consistent rendering
-    temp.style.padding = '20px';
-    temp.style.background = '#f0f4ff';
-    temp.style.boxSizing = 'border-box';
-    temp.style.display = 'block';
-
-    // clone and append the group's elements
-    for (const el of batches[b]) {
-      const clone = el.cloneNode(true);
-      // ensure canvases are visible in cloned node: copy the actual canvas pixels
-      const canvases = el.querySelectorAll('canvas');
-      if (canvases.length) {
-        // for each canvas in original, copy image to cloned canvas after html2canvas capture step
-        // we'll replace the canvas element in the clone with an <img> later
-      }
-      temp.appendChild(clone);
+    // group questions into chunks of 2
+    const groups = [];
+    for (let i=0; i < questions.length; i += 2) {
+        const pair = [questions[i]];
+        if (questions[i+1]) pair.push(questions[i+1]);
+        groups.push(pair);
     }
 
-    // hide offscreen
-    temp.style.position = 'fixed';
-    temp.style.left = '-2000px';
-    temp.style.top = '0px';
-    document.body.appendChild(temp);
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfW = 210;
+    const pdfH = 297;
 
-    // Before capturing, replace cloned canvas elements with images taken from original canvases
-    const clonedCanvases = temp.querySelectorAll('canvas');
-    for (let i = 0; i < clonedCanvases.length; i++) {
-      const origCanvas = batches[b][ Math.floor(i/1) ].querySelectorAll('canvas')[0];
-      if (origCanvas) {
-        try {
-          const dataUrl = origCanvas.toDataURL('image/png');
-          const img = document.createElement('img');
-          img.src = dataUrl;
-          img.style.display = 'block';
-          img.style.maxWidth = '100%';
-          img.style.height = 'auto';
-          // replace cloned canvas with image
-          clonedCanvases[i].parentNode.replaceChild(img, clonedCanvases[i]);
-        } catch (e) {
-          // fallback: leave canvas as-is (should rarely happen)
+    for (let g = 0; g < groups.length; g++) {
+
+        // create clean render container
+        const temp = document.createElement("div");
+        temp.style.direction = "rtl";
+        temp.style.width = "900px";
+        temp.style.padding = "40px";
+        temp.style.background = "#f0f4ff";
+        temp.style.boxSizing = "border-box";
+        temp.style.position = "fixed";
+        temp.style.left = "-2000px";
+        temp.style.top = "0";
+        document.body.appendChild(temp);
+
+        // clone the 2 questions
+        for (const el of groups[g]) {
+            const clone = el.cloneNode(true);
+
+            // fix canvas by converting chart canvases to images
+            const origCanvas = el.querySelector("canvas");
+            if (origCanvas) {
+                try {
+                    const imgURL = origCanvas.toDataURL("image/png");
+                    const img = document.createElement("img");
+                    img.src = imgURL;
+                    img.style.width = "560px";
+                    img.style.height = "420px";
+                    clone.querySelector("canvas").replaceWith(img);
+                } catch {}
+            }
+
+            clone.style.marginBottom = "40px";
+            temp.appendChild(clone);
         }
-      }
+
+        // render group → canvas
+        const canvas = await html2canvas(temp, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: null
+        });
+
+        document.body.removeChild(temp);
+
+        const imgW = pdfW;
+        const imgH = (canvas.height * pdfW) / canvas.width;
+
+        // auto-scale if too tall
+        let finalW = imgW;
+        let finalH = imgH;
+
+        if (finalH > pdfH - 10) {
+            const scale = (pdfH - 10) / finalH;
+            finalW *= scale;
+            finalH *= scale;
+        }
+
+        if (g > 0) pdf.addPage();
+
+        const yOffset = (pdfH - finalH) / 2;
+
+        pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, yOffset, finalW, finalH);
     }
 
-    // render the temp element
-    // use a higher scale for better quality
-    const canvas = await html2canvas(temp, { scale: 2, useCORS: true, backgroundColor: null });
-
-    // cleanup cloned node
-    document.body.removeChild(temp);
-
-    const imgData = canvas.toDataURL('image/png');
-
-    const imgWidth = pdfWidth;
-    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    if (b > 0) pdf.addPage();
-    // center the image vertically on the A4 page if imgHeight < pdfHeight
-    const yOffset = imgHeight < pdfHeight ? (pdfHeight - imgHeight) / 2 : 0;
-    pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
-  }
-
-  pdf.save('worksheet.pdf');
+    pdf.save("worksheet.pdf");
 }
 </script>
 
