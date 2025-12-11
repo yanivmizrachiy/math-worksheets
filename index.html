@@ -141,7 +141,7 @@
 
 </div>
 
-<!-- PDF EXPORTER -->
+<!-- ⭐ PDF EXPORTER -->
 <script>
 async function downloadPDF() {
     const { jsPDF } = window.jspdf;
@@ -227,44 +227,40 @@ async function downloadPDF() {
 function lineBounds(points){const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);return{minX:Math.min(...xs)-2,maxX:Math.max(...xs)+2,minY:Math.min(...ys)-2,maxY:Math.max(...ys)+2};}
 function labelPlugin(labels){return{id:'pointLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='bold 12px Arial';ctx.fillStyle='#000';labels.forEach(pt=>{const xp=chart.scales.x.getPixelForValue(pt.x),yp=chart.scales.y.getPixelForValue(pt.y);const off=8*(pt.side==='rtl'?-1:1);ctx.fillText(pt.label,xp+off,yp-8);});ctx.restore();}};}
 
-function drawPlane(canvasId, vertices, extraLines=[]) {
-  const coords = vertices.map(v => [v.x, v.y]);
-  const b = lineBounds(coords);
-  const xmin = b.minX, xmax = b.maxX, ymin = b.minY, ymax = b.maxY;
-  const axisX = [{x:xmin,y:0},{x:xmax,y:0}];
-  const axisY = [{x:0,y:ymin},{x:0,y:ymax}];
-  const closed = coords.concat([coords[0]]);
-  const ctx = document.getElementById(canvasId).getContext('2d');
-  if(ctx.chartInstance) ctx.chartInstance.destroy();
-  const labels = vertices.map(v => ({x:v.x, y:v.y, label:v.label, side:v.side||'ltr'}));
+function drawPlane(canvasId,vertices){
+  const coords=vertices.map(v=>[v.x,v.y]);
+  const b=lineBounds(coords);
+  const xmin=b.minX,xmax=b.maxX,ymin=b.minY,ymax=b.maxY;
+  const axisX=[{x:xmin,y:0},{x:xmax,y:0}];
+  const axisY=[{x:0,y:ymin},{x:0,y:ymax}];
+  const closed=coords.concat([coords[0]]);
+  const ctx=document.getElementById(canvasId).getContext('2d');
+  if(ctx.chartInstance)ctx.chartInstance.destroy();
+  const labels=vertices.map(v=>({x:v.x,y:v.y,label:v.label,side:v.side||'ltr'}));
 
-  const datasets = [
-    {data: axisX, showLine: true, borderColor:'#000', pointRadius:0, borderWidth:1},
-    {data: axisY, showLine: true, borderColor:'#000', pointRadius:0, borderWidth:1},
-    {data: closed.map(p => ({x:p[0], y:p[1]})), showLine:true, fill:true, borderColor:'#000', backgroundColor:'rgba(0,0,0,0.1)', pointRadius:4, borderWidth:2},
-    {data: coords.map(p => ({x:p[0], y:p[1]})), showLine:false, pointRadius:5, backgroundColor:'#000'}
-  ];
-
-  extraLines.forEach(line => {
-    datasets.push({data: line.points, showLine:true, borderColor:'#000', pointRadius:0, borderWidth:1, borderDash: line.dashed ? [5,5] : []});
-  });
-
-  const chart = new Chart(ctx,{
+  const chart=new Chart(ctx,{
     type:'scatter',
-    data: {datasets: datasets},
-    options: {
-      responsive: false,
-      maintainAspectRatio: false,
-      scales: {
-        x: {min:xmin,max:xmax,grid:{color:'#cccccc'}},
-        y: {min:ymin,max:ymax,grid:{color:'#cccccc'}}
+    data:{datasets:[
+      {data:axisX,showLine:true,borderColor:'#000',pointRadius:0,borderWidth:1},
+      {data:axisY,showLine:true,borderColor:'#000',pointRadius:0,borderWidth:1},
+      {data:closed.map(p=>({x:p[0],y:p[1]})),showLine:true,fill:true,
+       borderColor:'#000', backgroundColor:'rgba(0,0,0,0.1)',
+       pointRadius:4,borderWidth:2},
+      {data:coords.map(p=>({x:p[0],y:p[1]})),showLine:false,
+       pointRadius:5, backgroundColor:'#000'}
+    ]},
+    options:{
+      responsive:false,
+      maintainAspectRatio:false,
+      scales:{
+        x:{min:xmin,max:xmax,grid:{color:'#cccccc'}},
+        y:{min:ymin,max:ymax,grid:{color:'#cccccc'}}
       },
-      plugins: {legend:{display:false}}
+      plugins:{legend:{display:false}}
     },
-    plugins: [labelPlugin(labels)]
+    plugins:[labelPlugin(labels)]
   });
-
-  ctx.chartInstance = chart;
+  ctx.chartInstance=chart;
 }
 
 /* Vertices */
@@ -274,23 +270,14 @@ const Q1_C={x:Q1_B.x+(Q1_D.x-Q1_A.x),y:Q1_B.y+(Q1_D.y-Q1_A.y),label:'C'};
 const Q2_A={x:1,y:3,label:'A'},Q2_B={x:-6,y:3,label:'B'},Q2_C={x:-2,y:0,label:'C'};
 const Q2_D={x:Q2_C.x+(Q2_A.x-Q2_B.x),y:Q2_C.y+(Q2_A.y-Q2_B.y),label:'D'};
 
-// Calculate foot H from A to CD
-const slopeCD = (Q2_D.y - Q2_C.y)/(Q2_D.x - Q2_C.x);
-const slopePerp = -1/slopeCD;
-const interceptA = Q2_A.y - slopePerp*Q2_A.x;
-const interceptCD = Q2_C.y - slopeCD*Q2_C.x;
-const H_x = (interceptCD - interceptA)/(slopePerp - slopeCD);
-const H_y = slopePerp*H_x + interceptA;
-const H = {x:H_x, y:H_y};
-
 const Q3_A={x:0,y:0,label:'A'},Q3_B={x:4,y:0,label:'B'},Q3_D={x:3,y:3,label:'D'},Q3_C={x:7,y:3,label:'C'};
 
 const Q4_A={x:-2,y:3,label:'A'},Q4_B={x:-2,y:7,label:'B'},Q4_C={x:0,y:5,label:'C'},Q4_D={x:0,y:1,label:'D'};
 
 const Q5_A={x:-3,y:-5,label:'A'},Q5_B={x:-1,y:1,label:'B'},Q5_C={x:3,y:5,label:'C'},Q5_D={x:1,y:-1,label:'D'};
 
-// Q6 adjusted to match uploaded image
-const Q6_A={x:0,y:4,label:'A'}, Q6_B={x:1,y:10,label:'B'}, Q6_C={x:5,y:10,label:'C'}, Q6_D={x:4,y:4,label:'D'};
+const Q6_D={x:4,y:4,label:'D'},Q6_C={x:4,y:10,label:'C'};
+const Q6_B={x:0,y:8,label:'B'},Q6_A={x:0,y:2,label:'A'};
 
 Q1_A.side='rtl';Q1_B.side='rtl';Q1_C.side='ltr';Q1_D.side='ltr';
 Q2_A.side='rtl';Q2_B.side='rtl';Q2_C.side='ltr';Q2_D.side='ltr';
@@ -300,15 +287,8 @@ Q5_A.side='rtl';Q5_B.side='rtl';Q5_C.side='ltr';Q5_D.side='ltr';
 Q6_A.side='rtl';Q6_B.side='rtl';Q6_C.side='ltr';Q6_D.side='ltr';
 
 window.addEventListener('load',()=>{
-  drawPlane('chart1',[Q1_A,Q1_B,Q1_C,Q1_D], [
-    {points:[{x:Q1_A.x,y:Q1_A.y},{x:Q1_C.x,y:Q1_C.y}]}, // diagonal AC
-    {points:[{x:Q1_B.x,y:Q1_B.y},{x:Q1_D.x,y:Q1_D.y}]}  // diagonal BD
-  ]);
-
-  drawPlane('chart2',[Q2_A,Q2_B,Q2_C,Q2_D], [
-    {points:[{x:Q2_A.x,y:Q2_A.y},{x:H.x,y:H.y}], dashed:true} // height from A to CD
-  ]);
-
+  drawPlane('chart1',[Q1_A,Q1_B,Q1_C,Q1_D]);
+  drawPlane('chart2',[Q2_A,Q2_B,Q2_C,Q2_D]);
   drawPlane('chart3',[Q3_A,Q3_B,Q3_C,Q3_D]);
   drawPlane('chart4',[Q4_A,Q4_B,Q4_C,Q4_D]);
   drawPlane('chart5',[Q5_A,Q5_B,Q5_C,Q5_D]);
