@@ -10,7 +10,7 @@
 <script id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<!-- 🔹 PDF libraries -->
+<!-- PDF LIBRARIES -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -24,7 +24,6 @@
   canvas { display:block; margin:12px auto; width:560px; height:420px; background:#fff; border:1px solid #d6d9df; border-radius:10px; }
   @media (max-width:640px){ canvas{width:320px;height:240px;} }
 
-  /* 🔹 PDF button style */
   #pdfButton {
     padding:12px 20px;
     background:#4a57ff;
@@ -40,7 +39,7 @@
 </head>
 <body>
 
-<!-- 🔹 PDF DOWNLOAD BUTTON -->
+<!-- PDF BUTTON -->
 <button id="pdfButton" onclick="downloadPDF()">📄 הורד כ-PDF</button>
 
 <h1>דף עבודה - מקביליות במערכת הצירים</h1>
@@ -80,9 +79,9 @@
 
   <!-- Q4 -->
   <div class="question">
-    <div class="coordinates">4. \(A(-2,3)\), \(B(-2,7)\), \(C(0,5)\), \(D(0,1)\) (מתוך התמונה).</div>
-    <div class="sub-question">א. האם הנתונים מאפשרים למצוא את היקף המקבילית? הסבירו.</div>
-    <div class="sub-question">ב. האם הנתונים מאפשרים למצוא את שטח המקבילית? הסבירו.</div>
+    <div class="coordinates">4. \(A(-2,3)\), \(B(-2,7)\), \(C(0,5)\), \(D(0,1)\).</div>
+    <div class="sub-question">א. האם הנתונים מאפשרים למצוא את היקף המקבילית?</div>
+    <div class="sub-question">ב. האם הנתונים מאפשרים למצוא את שטח המקבילית?</div>
     <canvas id="chart4" width="560" height="420"></canvas>
   </div>
 
@@ -90,109 +89,106 @@
   <div class="question">
     <div class="coordinates">5. \(AB\) על \(y=3x+4\), \(BC\) על \(y=x+2\), ו-\(D(1,-1)\).</div>
     <div class="sub-question">א. מצאו את \(B\).</div>
-    <div class="sub-question">ב. מצאו משוואות הישרים עליהן מונחות \(DC\) ו-\(AD\).</div>
+    <div class="sub-question">ב. מצאו משוואות הישרים \(DC\) ו-\(AD\).</div>
     <div class="sub-question">ג. מצאו את משוואת האלכסון \(AC\).</div>
     <canvas id="chart5" width="560" height="420"></canvas>
   </div>
 
   <!-- Q6 -->
   <div class="question">
-    <div class="coordinates">6. \(D(4,4)\), \(C(4,10)\). \(BC\) על \(y=\tfrac12 x+8\). האלכסון \(BD\) על \(y=8-x\).</div>
+    <div class="coordinates">6. \(D(4,4)\), \(C(4,10)\). \(BC\) על \(y=\frac12 x+8\). האלכסון \(BD\) על \(y=8-x\).</div>
     <div class="sub-question">א. מצאו את \(A\).</div>
-    <div class="sub-question">ב. מצאו משוואות הישרים עליהן מונחות \(CD\), \(AD\) ו-\(AB\).</div>
+    <div class="sub-question">ב. מצאו משוואות הצלעות.</div>
     <div class="sub-question">ג. מצאו את \(B\).</div>
-    <div class="sub-question">ד. מהו אורך הגובה מ-\(B\) ל-\(CD\)?</div>
-    <div class="sub-question">ה. הוכיחו שהמשולשים \(AGH\) ו-\(ABD\) דומים.</div>
+    <div class="sub-question">ד. מהו אורך הגובה?</div>
+    <div class="sub-question">ה. הוכיחו דמיון משולשים.</div>
     <canvas id="chart6" width="560" height="420"></canvas>
   </div>
 
 </div>
 
+<!-- MULTI-PAGE PDF EXPORT -->
 <script>
-/* ---------- PDF FUNCTION ---------- */
 async function downloadPDF() {
     const { jsPDF } = window.jspdf;
 
-    const element = document.body; // export full page
-    const canvas = await html2canvas(element, { scale: 2 });
+    const element = document.body;
+
+    const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true
+    });
 
     const imgData = canvas.toDataURL("image/png");
+
     const pdf = new jsPDF("p", "mm", "a4");
-
     const pdfWidth = 210;
-    const pdfHeight = (canvas.height * 210) / canvas.width;
+    const pdfHeight = 297;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    // first page
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
+
+    while (heightLeft > 0) {
+        pdf.addPage();
+        position = - (imgHeight - heightLeft);
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+    }
+
     pdf.save("worksheet.pdf");
 }
+</script>
 
-/* ---------- helper utilities ---------- */
-function lineBounds(points) {
-  const xs = points.map(p => p[0]), ys = points.map(p => p[1]);
-  return { minX: Math.min(...xs)-2, maxX: Math.max(...xs)+2, minY: Math.min(...ys)-2, maxY: Math.max(...ys)+2 };
-}
 
-function labelPlugin(labels) {
-  return {
-    id: 'pointLabels',
-    afterDraw(chart) {
-      const ctx = chart.ctx;
-      ctx.save();
-      ctx.font = 'bold 12px Arial';
-      ctx.fillStyle = '#0b1220';
-      labels.forEach(pt => {
-        const xPixel = chart.scales.x.getPixelForValue(pt.x);
-        const yPixel = chart.scales.y.getPixelForValue(pt.y);
-        const offsetX = 8 * (pt.side === 'rtl' ? -1 : 1);
-        ctx.fillText(pt.label, xPixel + offsetX, yPixel - 8);
-      });
-      ctx.restore();
-    }
-  };
-}
+<!-- DRAWING CODE (unchanged) -->
+<script>
+function lineBounds(points){const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);return{minX:Math.min(...xs)-2,maxX:Math.max(...xs)+2,minY:Math.min(...ys)-2,maxY:Math.max(...ys)+2};}
+function labelPlugin(labels){return{id:'pointLabels',afterDraw(chart){const ctx=chart.ctx;ctx.save();ctx.font='bold 12px Arial';ctx.fillStyle='#0b1220';labels.forEach(pt=>{const xp=chart.scales.x.getPixelForValue(pt.x),yp=chart.scales.y.getPixelForValue(pt.y);const off=8*(pt.side==='rtl'?-1:1);ctx.fillText(pt.label,xp+off,yp-8);});ctx.restore();}};}
 
-function drawPlane(canvasId, vertices, opts = {}) {
-  const coords = vertices.map(v => [v.x, v.y]);
-  const bounds = lineBounds(coords);
-  const xmin = bounds.minX, xmax = bounds.maxX, ymin = bounds.minY, ymax = bounds.maxY;
+function drawPlane(canvasId,vertices){
+  const coords=vertices.map(v=>[v.x,v.y]);
+  const b=lineBounds(coords);
+  const xmin=b.minX,xmax=b.maxX,ymin=b.minY,ymax=b.maxY;
+  const axisX=[{x:xmin,y:0},{x:xmax,y:0}];
+  const axisY=[{x:0,y:ymin},{x:0,y:ymax}];
+  const closed=coords.concat([coords[0]]);
+  const ctx=document.getElementById(canvasId).getContext('2d');
+  if(ctx.chartInstance)ctx.chartInstance.destroy();
+  const labels=vertices.map(v=>({x:v.x,y:v.y,label:v.label,side:v.side||'ltr'}));
 
-  const axisX = [{x:xmin, y:0}, {x:xmax, y:0}];
-  const axisY = [{x:0, y:ymin}, {x:0, y:ymax}];
-
-  const closed = coords.concat([coords[0]]);
-
-  const ctx = document.getElementById(canvasId).getContext('2d');
-  if (ctx.chartInstance) ctx.chartInstance.destroy();
-
-  const labelPts = vertices.map(v => ({x:v.x, y:v.y, label:v.label, side:v.side || 'ltr'}));
-
-  const chart = new Chart(ctx, {
-    type: 'scatter',
-    data: {
-      datasets: [
-        { data: axisX, showLine:true, borderColor:'#999', pointRadius:0, borderWidth:1 },
-        { data: axisY, showLine:true, borderColor:'#999', pointRadius:0, borderWidth:1 },
-        { data: closed.map(p => ({x:p[0], y:p[1]})), showLine:true, fill:true,
-          borderColor:'#246bff', backgroundColor:'rgba(36,107,255,0.18)', pointRadius:4, borderWidth:2 },
-        { data: coords.map(p=>({x:p[0], y:p[1]})), showLine:false, pointRadius:5, backgroundColor:'#0047b3' }
-      ]
-    },
-    options: {
+  const chart=new Chart(ctx,{
+    type:'scatter',
+    data:{datasets:[
+      {data:axisX,showLine:true,borderColor:'#999',pointRadius:0,borderWidth:1},
+      {data:axisY,showLine:true,borderColor:'#999',pointRadius:0,borderWidth:1},
+      {data:closed.map(p=>({x:p[0],y:p[1]})),showLine:true,fill:true,
+       borderColor:'#246bff',backgroundColor:'rgba(36,107,255,0.18)',
+       pointRadius:4,borderWidth:2},
+      {data:coords.map(p=>({x:p[0],y:p[1]})),showLine:false,
+       pointRadius:5,backgroundColor:'#0047b3'}
+    ]},
+    options:{
       responsive:false,
       maintainAspectRatio:false,
       scales:{
-        x:{min:xmin, max:xmax, grid:{color:'#e6e6e6'}},
-        y:{min:ymin, max:ymax, grid:{color:'#e6e6e6'}}
+        x:{min:xmin,max:xmax,grid:{color:'#e6e6e6'}},
+        y:{min:ymin,max:ymax,grid:{color:'#e6e6e6'}}
       },
       plugins:{legend:{display:false}}
     },
-    plugins:[labelPlugin(labelPts)]
+    plugins:[labelPlugin(labels)]
   });
-
-  ctx.chartInstance = chart;
+  ctx.chartInstance=chart;
 }
 
-/* ---------- compute vertices ---------- */
+/* Vertices */
 const Q1_A={x:-5,y:2,label:'A'},Q1_B={x:-3,y:6,label:'B'},Q1_D={x:1,y:2,label:'D'};
 const Q1_C={x:Q1_B.x+(Q1_D.x-Q1_A.x),y:Q1_B.y+(Q1_D.y-Q1_A.y),label:'C'};
 
