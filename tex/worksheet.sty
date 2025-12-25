@@ -1,0 +1,36 @@
+% worksheet.sty - עיצוב דפי עבודה במתמטיקה
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{worksheet}[2025/01/01 Hebrew Math Worksheet Package]
+
+% חבילות בסיסיות
+\RequirePackage{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{fancyhdr}
+\RequirePackage{tikz,pgfplots}
+\RequirePackage{lastpage}
+\RequirePackage{array,tabularx}
+
+% הגדרת עמוד
+\geometry{
+  a4paper,
+  top=2cm,
+  bottom=2cm,
+  left=2cm,
+  right=2cm
+}
+
+% כותרות עליונות ותחתונות
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\RL{\@title}}
+\fancyhead[L]{\RL{\@date}}
+\fancyfoot[C]{\RL{עמוד \thepage\ מתוך \pageref{LastPage}}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% הגדרות גרפים
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,patterns,shapes}
+
+\endinput
