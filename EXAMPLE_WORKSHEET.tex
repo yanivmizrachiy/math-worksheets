@@ -1,0 +1,105 @@
+% דוגמה מעשית - דף עבודה במתמטיקה
+% העתק את התוכן הזה ל-main.tex כדי לראות דוגמה של דף עבודה אמיתי
+
+\documentclass[a4paper,12pt]{article}
+% חבילות עברית
+\usepackage{fontspec}
+\usepackage[hebrew,english]{babel}
+\babelprovide[import, main]{hebrew}
+\babelprovide[import]{english}
+
+% פונט חינמי (מותקן ב-Windows)
+\setmainfont{Times New Roman}
+\newfontfamily\hebrewfont{Times New Roman}
+
+% החבילה המותאמת שלנו
+\makeatletter\input{./tex/worksheet.sty}\makeatother
+
+\begin{document}
+
+% כותרת ראשית
+\begin{center}
+\Large\textbf{דף עבודה - משוואות ליניאריות}\\
+\large כיתה: \underline{\hspace{3cm}} \quad שם: \underline{\hspace{4cm}} \quad תאריך: \underline{\hspace{3cm}}
+\end{center}
+
+\vspace{1cm}
+
+% שאלה 1
+\section*{שאלה 1}
+פתרו את המשוואות הבאות:
+
+\begin{enumerate}
+\item פתרו: $3x + 7 = 22$
+\vspace{2.5cm}
+
+\item פתרו: $5x - 3 = 2x + 9$
+\vspace{2.5cm}
+
+\item פתרו: $\frac{x}{2} + 4 = 10$
+\vspace{2.5cm}
+\end{enumerate}
+
+% שאלה 2
+\section*{שאלה 2}
+פתרו את מערכת המשוואות הבאה:
+\begin{equation}
+\begin{aligned}
+x + 2y &= 8 \\
+3x - y &= 1
+\end{aligned}
+\end{equation}
+
+\vspace{3cm}
+
+% שאלה 3
+\section*{שאלה 3}
+נתונה הפונקציה הליניארית $f(x) = 2x + 1$.
+
+\begin{enumerate}
+\item חשבו את $f(3)$
+\vspace{2cm}
+
+\item מצאו את $x$ כך ש-$f(x) = 7$
+\vspace{2cm}
+
+\item האם הנקודה $(2, 5)$ נמצאת על גרף הפונקציה? נמקו.
+\vspace{2cm}
+\end{enumerate}
+
+% שאלה 4 - גרף
+\section*{שאלה 4}
+נתונה הפונקציה $y = -x + 3$.
+
+\begin{enumerate}
+\item מצאו את נקודת החיתוך עם ציר $y$
+\vspace{1.5cm}
+
+\item מצאו את נקודת החיתוך עם ציר $x$
+\vspace{1.5cm}
+
+\item ציירו גרף של הפונקציה (השתמשו ב-Desmos או GeoGebra)
+\vspace{4cm}
+\end{enumerate}
+
+% שאלה 5 - בעיה מילולית
+\section*{שאלה 5}
+בבית ספר יש 120 תלמידים. מספר הבנות גדול ב-20 ממספר הבנים.
+
+\begin{enumerate}
+\item הגדירו משתנה וכתבו משוואה
+\vspace{2cm}
+
+\item כמה בנות וכמה בנים יש בבית הספר?
+\vspace{2.5cm}
+\end{enumerate}
+
+\vspace{1cm}
+
+\begin{center}
+\rule{0.5\textwidth}{0.4pt}\\
+\textbf{בהצלחה!}
+\end{center}
+
+\end{document}
+
