@@ -1,0 +1,83 @@
+\\documentclass[a4paper,12pt]{article}
+
+% חבילות עברית
+\\usepackage{fontspec}
+\\usepackage{polyglossia}
+\\setdefaultlanguage{hebrew}
+\\setotherlanguage{english}
+\\setmainfont{Heebo}[
+  Extension=.ttf,
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=*-Light
+]
+\\newfontfamily\\hebrewfont{Heebo}[
+  Extension=.ttf,
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=*-Light
+]
+
+% החבילה המותאמת שלנו
+\\usepackage{worksheet}
+
+% פרטי המסמך
+\\title{דף עבודה במתמטיקה}
+\\author{}
+\\date{\\today}
+
+\\begin{document}
+
+% כותרת ראשית
+\\begin{center}
+  {\\LARGE \\textbf{\\RL{דף עבודה: משוואות ליניאריות}}}\\\\[0.5cm]
+  {\\large \\RL{שם:} \\underline{\\hspace{5cm}} \\quad \\RL{כיתה:} \\underline{\\hspace{3cm}}}\\\\[0.3cm]
+  {\\large \\RL{תאריך:} \\underline{\\hspace{4cm}}}
+\\end{center}
+
+\\vspace{0.5cm}
+
+% שאלה 1
+\\section*{\\RL{שאלה 1}}
+\\RL{פתרו את המשוואה הבאה:}
+\\[2x + 5 = 13\\]
+
+\\vspace{3cm}
+
+% שאלה 2
+\\section*{\\RL{שאלה 2}}
+\\RL{צרו גרף של הפונקציה} $y = 2x + 1$
+
+\\begin{center}
+\\begin{tikzpicture}
+\\begin{axis}[
+  xlabel={$x$},
+  ylabel={$y$},
+  xmin=-3, xmax=3,
+  ymin=-3, ymax=7,
+  axis lines=middle,
+  grid=major
+]
+\\addplot[blue,thick,domain=-3:3] {2*x+1};
+\\end{axis}
+\\end{tikzpicture}
+\\end{center}
+
+% שאלה 3
+\\section*{\\RL{שאלה 3}}
+\\RL{השלימו את הטבלה:}
+
+\\begin{center}
+\\begin{tabular}{|c|c|}
+\\hline
+\\textbf{\\RL{x}} & \\textbf{\\RL{y = 3x - 2}} \\\\\\hline
+0 & \\\\\\hline
+1 & \\\\\\hline
+2 & \\\\\\hline
+3 & \\\\\\hline
+\\end{tabular}
+\\end{center}
+
+\\vspace{2cm}
+
+\\end{document}

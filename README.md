@@ -57,5 +57,12 @@ math-worksheets/
 
 סך הכל: **460+ שורות קוד מוכנות**
 
+## 🔗 קישורים
+
+<!-- הוסף כאן את הקישור לאתר שלך -->
+<!-- לדוגמה: [אתר שלי](https://yourwebsite.com) -->
+
+לקישורים נוספים, ראה [LINKS.md](LINKS.md)
+
 ---
 נוצר ע"י Comet AI 🚀

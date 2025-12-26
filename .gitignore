@@ -1,0 +1,52 @@
+# LaTeX build files
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.xdv
+*.fdb_latexmk
+*.figlist
+*.makefile
+*.auxlock
+*.toc
+*.lof
+*.lot
+*.out
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Backup files
+*.bak-*
+*.backup*
+*~
+
+# PDF output (אופציונלי - אם רוצה לשמור PDF, הסר את השורה הזו)
+# main.pdf
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+
+# System files
+.DS_Store
+
+# MiKTeX
+*.mf
+*.tfm
+*.gf
+
+# Logs
+out/*.log
+

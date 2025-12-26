@@ -2,35 +2,24 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{worksheet}[2025/01/01 Hebrew Math Worksheet Package]
 
-% חבילות בסיסיות
-\RequirePackage{geometry}
-\RequirePackage{graphicx}
-\RequirePackage{amsmath,amssymb}
-\RequirePackage{fancyhdr}
-\RequirePackage{tikz,pgfplots}
-\RequirePackage{lastpage}
-\RequirePackage{array,tabularx}
+% חבילות בסיסיות - רק מה שכבר קיים ב-LaTeX base (ללא התקנות נוספות)
+\RequirePackage{graphicx}  % קיים ב-LaTeX base
+\RequirePackage{amsmath,amssymb}  % קיים ב-LaTeX base
+\RequirePackage{array}  % קיים ב-LaTeX base
 
-% הגדרת עמוד
-\geometry{
-  a4paper,
-  top=2cm,
-  bottom=2cm,
-  left=2cm,
-  right=2cm
-}
+% הגדרת שוליים בסיסית (ללא geometry - משתמש בהגדרות של documentclass)
+\setlength{\topmargin}{-2cm}
+\setlength{\headheight}{0.5cm}
+\setlength{\headsep}{0.5cm}
+\setlength{\textheight}{24cm}
+\setlength{\oddsidemargin}{-2cm}
+\setlength{\textwidth}{17cm}
 
-% כותרות עליונות ותחתונות
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[R]{\RL{\@title}}
-\fancyhead[L]{\RL{\@date}}
-\fancyfoot[C]{\RL{עמוד \thepage\ מתוך \pageref{LastPage}}}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
+% כותרות - פשוטות ללא fancyhdr (ללא התקנות נוספות)
+\pagestyle{plain}
 
-% הגדרות גרפים
-\pgfplotsset{compat=1.18}
-\usetikzlibrary{arrows.meta,patterns,shapes}
+% הגדרות גרפים - לא נטען (דורש חבילות חיצוניות)
+% אם נדרש tikz/pgfplots - ניתן להוסיף מאוחר יותר
 
 \endinput
+
