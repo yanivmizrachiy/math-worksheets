@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>יוצר דפי עבודה - מערכת חכמה</title>
+    <style>
+        :root {
+            --gold-premium: #D4AF37;
+            --gold-light: #FFD700;
+            --gold-dark: #B8860B;
+            --burgundy: #8B0000;
+            --navy-premium: #1a1a2e;
+            --navy-light: #16213e;
+            --bg-dark: #0a0a0a;
+            --bg-medium: #1a1a1a;
+            --text-light: #f5f5f5;
+            --shadow-premium: 0 10px 40px rgba(212, 175, 55, 0.3);
+            --shadow-hover: 0 15px 50px rgba(212, 175, 55, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--navy-dark) 50%, var(--bg-medium) 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 100vh;
+        }
+
+        .left-panel, .right-panel {
+            background: linear-gradient(145deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-premium);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            overflow-y: auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--gold-premium), var(--burgundy));
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 0;
+            left: 0;
+            height: 3px;
+            background: rgba(212, 175, 55, 0.3);
+            z-index: 0;
+        }
+
+        .step {
+            background: rgba(42, 42, 42, 0.8);
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .step.active {
+            background: var(--gold-premium);
+            border-color: var(--gold-light);
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            transform: scale(1.1);
+        }
+
+        .step.completed {
+            background: #2d8659;
+            border-color: #1e5d3f;
+        }
+
+        .step-content {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--gold-light);
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(42, 42, 42, 0.8);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold-premium);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .question-item {
+            background: rgba(42, 42, 42, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .question-item .remove-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--burgundy);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .question-item .remove-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 1.05em;
+            transition: all 0.3s;
+            margin: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold-premium), var(--gold-dark));
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2d8659, #1e5d3f);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(45, 134, 89, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(42, 42, 42, 0.8);
+            color: var(--text-light);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold-premium);
+            background: rgba(52, 52, 52, 0.9);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .preview-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 100%;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.2);
+        }
+
+        .preview-header {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .preview-content {
+            color: #333;
+            line-height: 1.8;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .preview-content h1, .preview-content h2 {
+            color: #1a1a2e;
+            margin: 20px 0 15px 0;
+        }
+
+        .preview-content h1 {
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .preview-content h2 {
+            font-size: 1.5em;
+            border-bottom: 2px solid var(--gold-premium);
+            padding-bottom: 5px;
+        }
+
+        .add-question-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .add-question-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 10px 5px;
+        }
+
+        .status-ready {
+            background: linear-gradient(135deg, #2d8659, #1e5d3f);
+            color: white;
+        }
+
+        .status-building {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .latex-code {
+            background: rgba(0, 0, 0, 0.8);
+            color: #FFD700;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+            margin: 15px 0;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            .left-panel, .right-panel {
+                height: auto;
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="header">
+                <h1>✨ יוצר דפי עבודה חכם ✨</h1>
+                <p>יצירת דפי עבודה מקצועיים במתמטיקה - שלב אחר שלב</p>
+            </div>
+
+            <div class="step-indicator">
+                <div class="step active" data-step="1">1</div>
+                <div class="step" data-step="2">2</div>
+                <div class="step" data-step="3">3</div>
+                <div class="step" data-step="4">4</div>
+            </div>
+
+            <!-- שלב 1: פרטים כלליים -->
+            <div class="step-content active" data-step="1">
+                <h2 style="color: var(--gold-light); margin-bottom: 20px;">שלב 1: פרטים כלליים</h2>
+                
+                <div class="form-group">
+                    <label>כותרת דף העבודה:</label>
+                    <input type="text" id="worksheet-title" placeholder="לדוגמה: משוואות ליניאריות" value="דף עבודה במתמטיקה">
+                </div>
+
+                <div class="form-group">
+                    <label>כיתה:</label>
+                    <input type="text" id="worksheet-class" placeholder="לדוגמה: כיתה י'">
+                </div>
+
+                <div class="form-group">
+                    <label>הערות (אופציונלי):</label>
+                    <textarea id="worksheet-notes" placeholder="הערות, הוראות, או מידע נוסף..."></textarea>
+                </div>
+
+                <div class="navigation-buttons">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="nextStep()">הבא →</button>
+                </div>
+            </div>
+
+            <!-- שלב 2: שאלות -->
+            <div class="step-content" data-step="2">
+                <h2 style="color: var(--gold-light); margin-bottom: 20px;">שלב 2: הוספת שאלות</h2>
+                
+                <div id="questions-container">
+                    <div class="question-item">
+                        <button class="remove-btn" onclick="removeQuestion(this)">×</button>
+                        <div class="form-group">
+                            <label>שאלה:</label>
+                            <textarea class="question-text" placeholder="כתוב כאן את השאלה..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>סוג שאלה:</label>
+                            <select class="question-type">
+                                <option value="text">טקסט רגיל</option>
+                                <option value="equation">משוואה</option>
+                                <option value="graph">גרף</option>
+                                <option value="table">טבלה</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>רווח לפתרון (ס"מ):</label>
+                            <input type="number" class="question-space" value="2" min="1" max="10">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn add-question-btn" onclick="addQuestion()">+ הוסף שאלה</button>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevStep()">← חזור</button>
+                    <button class="btn btn-primary" onclick="nextStep()">הבא →</button>
+                </div>
+            </div>
+
+            <!-- שלב 3: עיצוב -->
+            <div class="step-content" data-step="3">
+                <h2 style="color: var(--gold-light); margin-bottom: 20px;">שלב 3: עיצוב וסידור</h2>
+                
+                <div class="form-group">
+                    <label>גודל גופן:</label>
+                    <select id="font-size">
+                        <option value="11pt">קטן (11pt)</option>
+                        <option value="12pt" selected>רגיל (12pt)</option>
+                        <option value="14pt">גדול (14pt)</option>
+                        <option value="16pt">גדול מאוד (16pt)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>ריווח בין שאלות:</label>
+                    <input type="number" id="question-spacing" value="1.5" min="0.5" max="5" step="0.5">
+                </div>
+
+                <div class="form-group">
+                    <label>כותרות:</label>
+                    <select id="header-style">
+                        <option value="simple">פשוט</option>
+                        <option value="decorated" selected>מעוצב</option>
+                        <option value="minimal">מינימלי</option>
+                    </select>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevStep()">← חזור</button>
+                    <button class="btn btn-primary" onclick="nextStep()">הבא →</button>
+                </div>
+            </div>
+
+            <!-- שלב 4: סיום ובנייה -->
+            <div class="step-content" data-step="4">
+                <h2 style="color: var(--gold-light); margin-bottom: 20px;">שלב 4: סיום ובנייה</h2>
+                
+                <div class="latex-code" id="generated-latex" style="display: none;"></div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <span class="status-badge status-ready" id="status-badge">מוכן לבנייה</span>
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="btn btn-success" onclick="generateLaTeX()" style="font-size: 1.2em; padding: 15px 40px;">
+                        🚀 בנה PDF
+                    </button>
+                    <button class="btn btn-primary" onclick="downloadLaTeX()" style="font-size: 1.2em; padding: 15px 40px; margin-top: 15px;">
+                        💾 הורד קוד LaTeX
+                    </button>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevStep()">← חזור</button>
+                    <button class="btn btn-primary" onclick="resetWizard()">🔄 התחל מחדש</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="preview-container">
+                <div class="preview-header">
+                    <h1 style="color: #333;">תצוגה מקדימה</h1>
+                    <p style="color: #666; font-size: 0.9em;">הדף שלך יופיע כאן בזמן אמת</p>
+                </div>
+                <div class="preview-content" id="live-preview">
+                    <div style="text-align: center; color: #999; padding: 50px;">
+                        <p style="font-size: 1.2em;">תצוגה מקדימה תופיע כאן</p>
+                        <p style="font-size: 0.9em; margin-top: 10px;">התחל למלא את הפרטים כדי לראות תצוגה מקדימה</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function updateSteps() {
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                const stepNum = index + 1;
+                if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                } else if (stepNum === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+                if (parseInt(content.dataset.step) === currentStep) {
+                    content.classList.add('active');
+                }
+            });
+
+            updatePreview();
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateSteps();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateSteps();
+            }
+        }
+
+        function resetWizard() {
+            if (confirm('האם אתה בטוח שברצונך להתחיל מחדש? כל הנתונים יימחקו.')) {
+                currentStep = 1;
+                document.getElementById('worksheet-title').value = 'דף עבודה במתמטיקה';
+                document.getElementById('worksheet-class').value = '';
+                document.getElementById('worksheet-notes').value = '';
+                document.getElementById('questions-container').innerHTML = `
+                    <div class="question-item">
+                        <button class="remove-btn" onclick="removeQuestion(this)">×</button>
+                        <div class="form-group">
+                            <label>שאלה:</label>
+                            <textarea class="question-text" placeholder="כתוב כאן את השאלה..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>סוג שאלה:</label>
+                            <select class="question-type">
+                                <option value="text">טקסט רגיל</option>
+                                <option value="equation">משוואה</option>
+                                <option value="graph">גרף</option>
+                                <option value="table">טבלה</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>רווח לפתרון (ס"מ):</label>
+                            <input type="number" class="question-space" value="2" min="1" max="10">
+                        </div>
+                    </div>
+                `;
+                updateSteps();
+            }
+        }
+
+        function addQuestion() {
+            const container = document.getElementById('questions-container');
+            const newQuestion = document.createElement('div');
+            newQuestion.className = 'question-item';
+            newQuestion.innerHTML = `
+                <button class="remove-btn" onclick="removeQuestion(this)">×</button>
+                <div class="form-group">
+                    <label>שאלה:</label>
+                    <textarea class="question-text" placeholder="כתוב כאן את השאלה..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>סוג שאלה:</label>
+                    <select class="question-type">
+                        <option value="text">טקסט רגיל</option>
+                        <option value="equation">משוואה</option>
+                        <option value="graph">גרף</option>
+                        <option value="table">טבלה</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>רווח לפתרון (ס"מ):</label>
+                    <input type="number" class="question-space" value="2" min="1" max="10">
+                </div>
+            `;
+            container.appendChild(newQuestion);
+            
+            // הוספת event listeners לעדכון תצוגה מקדימה
+            newQuestion.querySelectorAll('input, textarea, select').forEach(el => {
+                el.addEventListener('input', updatePreview);
+                el.addEventListener('change', updatePreview);
+            });
+        }
+
+        function removeQuestion(btn) {
+            if (document.querySelectorAll('.question-item').length > 1) {
+                btn.closest('.question-item').remove();
+                updatePreview();
+            } else {
+                alert('חייב להיות לפחות שאלה אחת');
+            }
+        }
+
+        function updatePreview() {
+            const preview = document.getElementById('live-preview');
+            const title = document.getElementById('worksheet-title').value || 'דף עבודה במתמטיקה';
+            const classVal = document.getElementById('worksheet-class').value;
+            const notes = document.getElementById('worksheet-notes').value;
+
+            let html = `<h1>${escapeHtml(title)}</h1>`;
+            if (classVal) {
+                html += `<p style="text-align: center; color: #666;">כיתה: ${escapeHtml(classVal)}</p>`;
+            }
+            if (notes) {
+                html += `<p style="text-align: center; color: #666; font-style: italic;">${escapeHtml(notes)}</p>`;
+            }
+
+            const questions = document.querySelectorAll('.question-item');
+            questions.forEach((q, index) => {
+                const questionText = q.querySelector('.question-text').value;
+                const questionType = q.querySelector('.question-type').value;
+                const space = q.querySelector('.question-space').value;
+
+                if (questionText.trim()) {
+                    html += `<h2>שאלה ${index + 1}</h2>`;
+                    html += `<p>${escapeHtml(questionText)}</p>`;
+                    
+                    if (questionType === 'equation') {
+                        html += `<div style="text-align: center; margin: 15px 0; padding: 10px; background: #f5f5f5; border-radius: 5px;">[משוואה]</div>`;
+                    } else if (questionType === 'graph') {
+                        html += `<div style="text-align: center; margin: 15px 0; padding: 20px; background: #f5f5f5; border-radius: 5px;">[גרף - השתמש ב-Desmos או GeoGebra]</div>`;
+                    } else if (questionType === 'table') {
+                        html += `<div style="text-align: center; margin: 15px 0; padding: 10px; background: #f5f5f5; border-radius: 5px;">[טבלה]</div>`;
+                    }
+                    
+                    html += `<div style="height: ${space}cm; border-bottom: 1px dashed #ccc; margin: 20px 0;"></div>`;
+                }
+            });
+
+            preview.innerHTML = html;
+
+            // הוספת event listeners לכל השדות
+            document.querySelectorAll('#worksheet-title, #worksheet-class, #worksheet-notes').forEach(el => {
+                if (!el.dataset.listenerAdded) {
+                    el.addEventListener('input', updatePreview);
+                    el.dataset.listenerAdded = 'true';
+                }
+            });
+
+            document.querySelectorAll('.question-text, .question-type, .question-space').forEach(el => {
+                if (!el.dataset.listenerAdded) {
+                    el.addEventListener('input', updatePreview);
+                    el.addEventListener('change', updatePreview);
+                    el.dataset.listenerAdded = 'true';
+                }
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function generateLaTeX() {
+            const badge = document.getElementById('status-badge');
+            badge.textContent = 'בונה PDF...';
+            badge.className = 'status-badge status-building';
+
+            const latexCode = buildLaTeX();
+            document.getElementById('generated-latex').textContent = latexCode;
+            document.getElementById('generated-latex').style.display = 'block';
+
+            // כאן אפשר להוסיף קריאה לסקריפט PowerShell לבניית PDF
+            // לעת עתה רק מציג את הקוד
+            
+            setTimeout(() => {
+                badge.textContent = 'PDF נבנה בהצלחה!';
+                badge.className = 'status-badge status-ready';
+            }, 2000);
+
+            alert('קוד LaTeX נוצר! לחץ על "הורד קוד LaTeX" כדי לשמור את הקובץ, או העתק את הקוד ותדביק אותו ב-main.tex');
+        }
+
+        function buildLaTeX() {
+            const title = document.getElementById('worksheet-title').value || 'דף עבודה במתמטיקה';
+            const classVal = document.getElementById('worksheet-class').value;
+            const notes = document.getElementById('worksheet-notes').value;
+            const fontSize = document.getElementById('font-size').value;
+            
+            let latex = `\\documentclass[a4paper,${fontSize}]{article}
+
+% חבילות עברית
+\\usepackage{fontspec}
+\\usepackage[hebrew,english]{babel}
+\\babelprovide[import, main]{hebrew}
+\\babelprovide[import]{english}
+
+% פונט
+\\setmainfont{Times New Roman}
+\\newfontfamily\\hebrewfont{Times New Roman}
+
+% החבילה המותאמת שלנו
+\\makeatletter\\input{./tex/worksheet.sty}\\makeatother
+
+\\begin{document}
+
+% כותרת
+\\begin{center}
+  {\\LARGE \\textbf{\\RL{${escapeLatex(title)}}}}\\vspace{0.5cm}
+`;
+            
+            if (classVal) {
+                latex += `  {\\large \\RL{כיתה:} \\underline{\\hspace{3cm}}}\\vspace{0.3cm}\\n`;
+            }
+            latex += `  {\\large \\RL{שם:} \\underline{\\hspace{5cm}}}\\vspace{0.3cm}\\n`;
+            latex += `  {\\large \\RL{תאריך:} \\underline{\\hspace{4cm}}}\\n`;
+            latex += `\\end{center}\\n\\n`;
+            
+            if (notes) {
+                latex += `\\RL{${escapeLatex(notes)}}\\n\\vspace{0.5cm}\\n\\n`;
+            }
+
+            const questions = document.querySelectorAll('.question-item');
+            questions.forEach((q, index) => {
+                const questionText = q.querySelector('.question-text').value;
+                const questionType = q.querySelector('.question-type').value;
+                const space = q.querySelector('.question-space').value;
+
+                if (questionText.trim()) {
+                    latex += `\\section*{\\RL{שאלה ${index + 1}}}\\n`;
+                    
+                    if (questionType === 'equation') {
+                        latex += `\\RL{${escapeLatex(questionText)}}\\n`;
+                        latex += `\\begin{equation}\\n  % הוסף כאן את המשוואה\\n\\end{equation}\\n\\n`;
+                    } else if (questionType === 'graph') {
+                        latex += `\\RL{${escapeLatex(questionText)}}\\n`;
+                        latex += `% צור גרף ב-Desmos או GeoGebra והוסף תמונה כאן\\n`;
+                        latex += `% \\includegraphics[width=0.8\\textwidth]{graph.png}\\n\\n`;
+                    } else if (questionType === 'table') {
+                        latex += `\\RL{${escapeLatex(questionText)}}\\n`;
+                        latex += `% הוסף כאן טבלה:\\n`;
+                        latex += `% \\begin{tabular}{|c|c|}\\n`;
+                        latex += `% \\hline\\n`;
+                        latex += `% & \\\\\\\\\\n`;
+                        latex += `% \\hline\\n`;
+                        latex += `% \\end{tabular}\\n\\n`;
+                    } else {
+                        latex += `\\RL{${escapeLatex(questionText)}}\\n`;
+                    }
+                    
+                    latex += `\\vspace{${space}cm}\\n\\n`;
+                }
+            });
+
+            latex += `\\end{document}`;
+
+            return latex;
+        }
+
+        function escapeLatex(text) {
+            return text
+                .replace(/\\/g, '\\textbackslash{}')
+                .replace(/{/g, '\\{')
+                .replace(/}/g, '\\}')
+                .replace(/\$/g, '\\$')
+                .replace(/#/g, '\\#')
+                .replace(/&/g, '\\&')
+                .replace(/%/g, '\\%')
+                .replace(/\^/g, '\\textasciicircum{}')
+                .replace(/_/g, '\\_');
+        }
+
+        function downloadLaTeX() {
+            const latexCode = buildLaTeX();
+            const blob = new Blob([latexCode], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'worksheet-generated.tex';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // אתחול
+        document.querySelectorAll('.step').forEach(step => {
+            step.addEventListener('click', function() {
+                const stepNum = parseInt(this.dataset.step);
+                if (stepNum <= currentStep || stepNum === currentStep + 1) {
+                    currentStep = stepNum;
+                    updateSteps();
+                }
+            });
+        });
+
+        // עדכון תצוגה מקדימה בהתחלה
+        updatePreview();
+    </script>
+</body>
+</html>
+
