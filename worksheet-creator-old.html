@@ -3,19 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>יוצר דפי עבודה - מערכת מתמטית מתקדמת</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true,
-                processEnvironments: true
-            }
-        };
-    </script>
+    <title>יוצר דפי עבודה - מערכת חכמה</title>
     <style>
         :root {
             --gold-premium: #D4AF37;
@@ -46,19 +34,19 @@
         }
 
         .container {
-            max-width: 1800px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 20px;
             display: grid;
-            grid-template-columns: 350px 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
             height: 100vh;
         }
 
-        .toolbar-panel, .left-panel, .right-panel {
+        .left-panel, .right-panel {
             background: linear-gradient(145deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
             border-radius: 20px;
-            padding: 20px;
+            padding: 30px;
             box-shadow: var(--shadow-premium);
             border: 2px solid rgba(212, 175, 55, 0.2);
             overflow-y: auto;
@@ -74,93 +62,9 @@
         }
 
         .header h1 {
-            font-size: 1.8em;
+            font-size: 2em;
             margin-bottom: 10px;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-        }
-
-        .toolbar-section {
-            margin-bottom: 25px;
-        }
-
-        .toolbar-section h3 {
-            color: var(--gold-light);
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .toolbar-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-        }
-
-        .tool-btn {
-            background: rgba(42, 42, 42, 0.8);
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            border-radius: 8px;
-            padding: 10px;
-            color: var(--text-light);
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.3s;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-        }
-
-        .tool-btn:hover {
-            background: rgba(52, 52, 52, 0.9);
-            border-color: var(--gold-premium);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .tool-btn.math {
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-
-        .tool-btn.active {
-            background: var(--gold-premium);
-            color: #000;
-            border-color: var(--gold-light);
-        }
-
-        .math-input-panel {
-            background: rgba(42, 42, 42, 0.6);
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .math-input-panel.active {
-            display: block;
-        }
-
-        .math-input-panel input {
-            width: 100%;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            border-radius: 8px;
-            color: var(--text-light);
-            font-family: 'Courier New', monospace;
-            margin-bottom: 10px;
-        }
-
-        .math-preview {
-            background: white;
-            color: #000;
-            padding: 15px;
-            border-radius: 8px;
-            min-height: 60px;
-            margin-bottom: 10px;
-            text-align: center;
-            font-size: 1.2em;
         }
 
         .step-indicator {
@@ -259,9 +163,8 @@
         }
 
         .form-group textarea {
-            min-height: 150px;
+            min-height: 120px;
             resize: vertical;
-            font-family: 'Courier New', monospace;
         }
 
         .question-item {
@@ -410,6 +313,17 @@
             color: white;
         }
 
+        .status-building {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         .latex-code {
             background: rgba(0, 0, 0, 0.8);
             color: #FFD700;
@@ -424,144 +338,24 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
-        .image-upload-area {
-            border: 2px dashed rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .image-upload-area:hover {
-            border-color: var(--gold-premium);
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .image-preview {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 1400px) {
-            .container {
-                grid-template-columns: 300px 1fr;
-            }
-            .right-panel {
-                display: none;
-            }
-        }
-
-        @media (max-width: 1000px) {
+        @media (max-width: 1200px) {
             .container {
                 grid-template-columns: 1fr;
+                height: auto;
+            }
+            .left-panel, .right-panel {
+                height: auto;
+                min-height: 500px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- סרגל כלים מתמטי -->
-        <div class="toolbar-panel">
-            <div class="header">
-                <h1>🔢 כלים מתמטיים</h1>
-            </div>
-
-            <!-- סמלים מתמטיים בסיסיים -->
-            <div class="toolbar-section">
-                <h3>סמלים בסיסיים</h3>
-                <div class="toolbar-buttons">
-                    <button class="tool-btn math" onclick="insertMath('+')">+</button>
-                    <button class="tool-btn math" onclick="insertMath('-')">−</button>
-                    <button class="tool-btn math" onclick="insertMath('\\times')">×</button>
-                    <button class="tool-btn math" onclick="insertMath('\\div')">÷</button>
-                    <button class="tool-btn math" onclick="insertMath('=')">=</button>
-                    <button class="tool-btn math" onclick="insertMath('\\neq')">≠</button>
-                    <button class="tool-btn math" onclick="insertMath('\\pm')">±</button>
-                    <button class="tool-btn math" onclick="insertMath('\\leq')">≤</button>
-                    <button class="tool-btn math" onclick="insertMath('\\geq')">≥</button>
-                    <button class="tool-btn math" onclick="insertMath('\\approx')">≈</button>
-                    <button class="tool-btn math" onclick="insertMath('\\infty')">∞</button>
-                    <button class="tool-btn math" onclick="insertMath('\\pi')">π</button>
-                </div>
-            </div>
-
-            <!-- שברים וחזקות -->
-            <div class="toolbar-section">
-                <h3>שברים וחזקות</h3>
-                <div class="toolbar-buttons">
-                    <button class="tool-btn" onclick="insertMath('\\frac{a}{b}')">שבר</button>
-                    <button class="tool-btn" onclick="insertMath('a^2')">חזקה</button>
-                    <button class="tool-btn" onclick="insertMath('\\sqrt{x}')">שורש</button>
-                    <button class="tool-btn" onclick="insertMath('\\sqrt[n]{x}')">שורש n</button>
-                </div>
-            </div>
-
-            <!-- אינטגרלים ונגזרות -->
-            <div class="toolbar-section">
-                <h3>אינטגרלים ונגזרות</h3>
-                <div class="toolbar-buttons">
-                    <button class="tool-btn" onclick="insertMath('\\int')">∫</button>
-                    <button class="tool-btn" onclick="insertMath('\\int_{a}^{b}')">∫ גבולות</button>
-                    <button class="tool-btn" onclick="insertMath('\\frac{d}{dx}')">נגזרת</button>
-                    <button class="tool-btn" onclick="insertMath('\\sum')">Σ</button>
-                    <button class="tool-btn" onclick="insertMath('\\prod')">Π</button>
-                    <button class="tool-btn" onclick="insertMath('\\lim')">lim</button>
-                </div>
-            </div>
-
-            <!-- מטריצות וקטורים -->
-            <div class="toolbar-section">
-                <h3>מטריצות וקטורים</h3>
-                <div class="toolbar-buttons">
-                    <button class="tool-btn" onclick="insertMatrix('2x2')">מטריצה 2×2</button>
-                    <button class="tool-btn" onclick="insertMatrix('3x3')">מטריצה 3×3</button>
-                    <button class="tool-btn" onclick="insertVector()">וקטור</button>
-                </div>
-            </div>
-
-            <!-- צורות גיאומטריות -->
-            <div class="toolbar-section">
-                <h3>צורות גיאומטריות</h3>
-                <div class="toolbar-buttons">
-                    <button class="tool-btn" onclick="insertGeometry('triangle')">△ משולש</button>
-                    <button class="tool-btn" onclick="insertGeometry('square')">□ ריבוע</button>
-                    <button class="tool-btn" onclick="insertGeometry('circle')">○ מעגל</button>
-                    <button class="tool-btn" onclick="insertGeometry('angle')">∠ זווית</button>
-                    <button class="tool-btn" onclick="insertGeometry('parallel')">∥ מקביל</button>
-                    <button class="tool-btn" onclick="insertGeometry('perpendicular')">⊥ מאונך</button>
-                </div>
-            </div>
-
-            <!-- תמונה -->
-            <div class="toolbar-section">
-                <h3>תמונות</h3>
-                <button class="btn btn-primary" style="width: 100%;" onclick="document.getElementById('image-input').click()">
-                    📷 הוסף תמונה
-                </button>
-                <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-            </div>
-
-            <!-- בונה נוסחאות -->
-            <div class="toolbar-section">
-                <h3>בונה נוסחאות</h3>
-                <div class="math-input-panel" id="math-builder">
-                    <input type="text" id="math-expression" placeholder="כתוב ביטוי מתמטי...">
-                    <div class="math-preview" id="math-preview"></div>
-                    <button class="btn btn-success" style="width: 100%;" onclick="insertCustomMath()">הכנס נוסחה</button>
-                </div>
-                <button class="btn btn-secondary" style="width: 100%;" onclick="toggleMathBuilder()">פתח בונה נוסחאות</button>
-            </div>
-        </div>
-
-        <!-- חלון עריכה -->
         <div class="left-panel">
             <div class="header">
                 <h1>✨ יוצר דפי עבודה חכם ✨</h1>
-                <p>יצירת דפי עבודה מקצועיים במתמטיקה</p>
+                <p>יצירת דפי עבודה מקצועיים במתמטיקה - שלב אחר שלב</p>
             </div>
 
             <div class="step-indicator">
@@ -599,24 +393,13 @@
             <!-- שלב 2: שאלות -->
             <div class="step-content" data-step="2">
                 <h2 style="color: var(--gold-light); margin-bottom: 20px;">שלב 2: הוספת שאלות</h2>
-                <p style="color: var(--text-light); margin-bottom: 20px; font-size: 0.9em;">
-                    💡 השתמש בסרגל הכלים משמאל כדי להוסיף נוסחאות, צורות ותמונות
-                </p>
                 
                 <div id="questions-container">
                     <div class="question-item">
                         <button class="remove-btn" onclick="removeQuestion(this)">×</button>
                         <div class="form-group">
                             <label>שאלה:</label>
-                            <textarea class="question-text" placeholder="כתוב כאן את השאלה... (השתמש ב-$...$ לנוסחאות מתמטיות)"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>תמונה (אופציונלי):</label>
-                            <div class="image-upload-area" onclick="this.querySelector('input').click()">
-                                <input type="file" accept="image/*" style="display: none;" onchange="handleQuestionImage(this, event)">
-                                <p>📷 לחץ כדי להוסיף תמונה</p>
-                                <img class="question-image" style="display: none; max-width: 100%; border-radius: 8px; margin-top: 10px;">
-                            </div>
+                            <textarea class="question-text" placeholder="כתוב כאן את השאלה..."></textarea>
                         </div>
                         <div class="form-group">
                             <label>סוג שאלה:</label>
@@ -702,7 +485,6 @@
             </div>
         </div>
 
-        <!-- תצוגה מקדימה -->
         <div class="right-panel">
             <div class="preview-container">
                 <div class="preview-header">
@@ -722,157 +504,6 @@
     <script>
         let currentStep = 1;
         const totalSteps = 4;
-        let currentTextarea = null;
-        let uploadedImages = {};
-
-        // MathJax configuration
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true,
-                processEnvironments: true
-            }
-        };
-
-        function getCurrentTextarea() {
-            const activeQuestion = document.querySelector('.question-item');
-            if (activeQuestion) {
-                return activeQuestion.querySelector('.question-text');
-            }
-            return null;
-        }
-
-        function insertMath(mathCode) {
-            const textarea = getCurrentTextarea() || document.activeElement;
-            if (textarea && textarea.tagName === 'TEXTAREA') {
-                const start = textarea.selectionStart;
-                const end = textarea.selectionEnd;
-                const text = textarea.value;
-                const before = text.substring(0, start);
-                const selected = text.substring(start, end);
-                const after = text.substring(end);
-                
-                let toInsert = '';
-                if (mathCode.includes('{a}') || mathCode.includes('{b}')) {
-                    toInsert = '$' + mathCode.replace('{a}', '{' + selected || 'a' + '}').replace('{b}', '{b}') + '$';
-                } else {
-                    toInsert = '$' + (selected || mathCode) + '$';
-                }
-                
-                textarea.value = before + toInsert + after;
-                textarea.selectionStart = textarea.selectionEnd = start + toInsert.length;
-                textarea.focus();
-                
-                // Update preview
-                updatePreview();
-            }
-        }
-
-        function insertMatrix(type) {
-            const textarea = getCurrentTextarea();
-            if (!textarea) return;
-            
-            let matrix = '';
-            if (type === '2x2') {
-                matrix = '$\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$';
-            } else if (type === '3x3') {
-                matrix = '$\\begin{pmatrix} a & b & c \\\\ d & e & f \\\\ g & h & i \\end{pmatrix}$';
-            }
-            
-            insertAtCursor(textarea, matrix);
-        }
-
-        function insertVector() {
-            const textarea = getCurrentTextarea();
-            if (!textarea) return;
-            insertAtCursor(textarea, '$\\begin{pmatrix} x \\\\ y \\\\ z \\end{pmatrix}$');
-        }
-
-        function insertGeometry(type) {
-            const textarea = getCurrentTextarea();
-            if (!textarea) return;
-            
-            const symbols = {
-                'triangle': '$\\triangle ABC$',
-                'square': '$\\square ABCD$',
-                'circle': '$\\bigcirc O$',
-                'angle': '$\\angle ABC$',
-                'parallel': '$AB \\parallel CD$',
-                'perpendicular': '$AB \\perp CD$'
-            };
-            
-            insertAtCursor(textarea, symbols[type] || '');
-        }
-
-        function insertAtCursor(textarea, text) {
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const before = textarea.value.substring(0, start);
-            const after = textarea.value.substring(end);
-            
-            textarea.value = before + text + after;
-            textarea.selectionStart = textarea.selectionEnd = start + text.length;
-            textarea.focus();
-            updatePreview();
-        }
-
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const imageId = 'img_' + Date.now();
-                    uploadedImages[imageId] = e.target.result;
-                    insertAtCursor(getCurrentTextarea(), `[תמונה: ${imageId}]`);
-                    alert('תמונה נוספה! היא תיכלל ב-PDF הסופי.');
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function handleQuestionImage(btn, event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const questionItem = btn.closest('.question-item');
-                    const img = questionItem.querySelector('.question-image');
-                    img.src = e.target.result;
-                    img.style.display = 'block';
-                    img.dataset.imageData = e.target.result;
-                    updatePreview();
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function toggleMathBuilder() {
-            const panel = document.getElementById('math-builder');
-            panel.classList.toggle('active');
-        }
-
-        function insertCustomMath() {
-            const expr = document.getElementById('math-expression').value;
-            if (expr) {
-                insertAtCursor(getCurrentTextarea(), '$' + expr + '$');
-                document.getElementById('math-expression').value = '';
-                document.getElementById('math-preview').innerHTML = '';
-            }
-        }
-
-        // Update math preview
-        document.getElementById('math-expression').addEventListener('input', function() {
-            const expr = this.value;
-            if (expr) {
-                document.getElementById('math-preview').innerHTML = '$$' + expr + '$$';
-                if (window.MathJax) {
-                    MathJax.typesetPromise([document.getElementById('math-preview')]);
-                }
-            } else {
-                document.getElementById('math-preview').innerHTML = '';
-            }
-        });
 
         function updateSteps() {
             document.querySelectorAll('.step').forEach((step, index) => {
@@ -920,15 +551,7 @@
                         <button class="remove-btn" onclick="removeQuestion(this)">×</button>
                         <div class="form-group">
                             <label>שאלה:</label>
-                            <textarea class="question-text" placeholder="כתוב כאן את השאלה... (השתמש ב-$...$ לנוסחאות מתמטיות)"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>תמונה (אופציונלי):</label>
-                            <div class="image-upload-area" onclick="this.querySelector('input').click()">
-                                <input type="file" accept="image/*" style="display: none;" onchange="handleQuestionImage(this, event)">
-                                <p>📷 לחץ כדי להוסיף תמונה</p>
-                                <img class="question-image" style="display: none; max-width: 100%; border-radius: 8px; margin-top: 10px;">
-                            </div>
+                            <textarea class="question-text" placeholder="כתוב כאן את השאלה..."></textarea>
                         </div>
                         <div class="form-group">
                             <label>סוג שאלה:</label>
@@ -945,7 +568,6 @@
                         </div>
                     </div>
                 `;
-                uploadedImages = {};
                 updateSteps();
             }
         }
@@ -958,15 +580,7 @@
                 <button class="remove-btn" onclick="removeQuestion(this)">×</button>
                 <div class="form-group">
                     <label>שאלה:</label>
-                    <textarea class="question-text" placeholder="כתוב כאן את השאלה... (השתמש ב-$...$ לנוסחאות מתמטיות)"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>תמונה (אופציונלי):</label>
-                    <div class="image-upload-area" onclick="this.querySelector('input').click()">
-                        <input type="file" accept="image/*" style="display: none;" onchange="handleQuestionImage(this, event)">
-                        <p>📷 לחץ כדי להוסיף תמונה</p>
-                        <img class="question-image" style="display: none; max-width: 100%; border-radius: 8px; margin-top: 10px;">
-                    </div>
+                    <textarea class="question-text" placeholder="כתוב כאן את השאלה..."></textarea>
                 </div>
                 <div class="form-group">
                     <label>סוג שאלה:</label>
@@ -984,6 +598,7 @@
             `;
             container.appendChild(newQuestion);
             
+            // הוספת event listeners לעדכון תצוגה מקדימה
             newQuestion.querySelectorAll('input, textarea, select').forEach(el => {
                 el.addEventListener('input', updatePreview);
                 el.addEventListener('change', updatePreview);
@@ -1018,18 +633,10 @@
                 const questionText = q.querySelector('.question-text').value;
                 const questionType = q.querySelector('.question-type').value;
                 const space = q.querySelector('.question-space').value;
-                const questionImage = q.querySelector('.question-image');
 
-                if (questionText.trim() || questionImage?.style.display === 'block') {
+                if (questionText.trim()) {
                     html += `<h2>שאלה ${index + 1}</h2>`;
-                    
-                    if (questionImage && questionImage.style.display === 'block') {
-                        html += `<img src="${questionImage.src}" style="max-width: 100%; border-radius: 8px; margin: 15px 0;" />`;
-                    }
-                    
-                    if (questionText.trim()) {
-                        html += `<p>${questionText}</p>`;
-                    }
+                    html += `<p>${escapeHtml(questionText)}</p>`;
                     
                     if (questionType === 'equation') {
                         html += `<div style="text-align: center; margin: 15px 0; padding: 10px; background: #f5f5f5; border-radius: 5px;">[משוואה]</div>`;
@@ -1045,14 +652,7 @@
 
             preview.innerHTML = html;
 
-            // Render MathJax
-            if (window.MathJax) {
-                MathJax.typesetPromise([preview]).catch(function(err) {
-                    console.log('MathJax error:', err);
-                });
-            }
-
-            // Add event listeners
+            // הוספת event listeners לכל השדות
             document.querySelectorAll('#worksheet-title, #worksheet-class, #worksheet-notes').forEach(el => {
                 if (!el.dataset.listenerAdded) {
                     el.addEventListener('input', updatePreview);
@@ -1084,6 +684,9 @@
             document.getElementById('generated-latex').textContent = latexCode;
             document.getElementById('generated-latex').style.display = 'block';
 
+            // כאן אפשר להוסיף קריאה לסקריפט PowerShell לבניית PDF
+            // לעת עתה רק מציג את הקוד
+            
             setTimeout(() => {
                 badge.textContent = 'PDF נבנה בהצלחה!';
                 badge.className = 'status-badge status-ready';
@@ -1136,35 +739,27 @@
                 const questionText = q.querySelector('.question-text').value;
                 const questionType = q.querySelector('.question-type').value;
                 const space = q.querySelector('.question-space').value;
-                const questionImage = q.querySelector('.question-image');
 
-                if (questionText.trim() || (questionImage && questionImage.style.display === 'block')) {
+                if (questionText.trim()) {
                     latex += `\\section*{\\RL{שאלה ${index + 1}}}\\n`;
                     
-                    if (questionImage && questionImage.style.display === 'block') {
-                        latex += `% תמונה - שמור את התמונה ותוסיף כאן:\\n`;
-                        latex += `% \\includegraphics[width=0.8\\textwidth]{image${index + 1}.png}\\n\\n`;
-                    }
-                    
-                    if (questionText.trim()) {
-                        // Convert $...$ to LaTeX math mode
-                        let processedText = questionText;
-                        processedText = processedText.replace(/\$([^$]+)\$/g, '$1'); // Remove $ for LaTeX
-                        latex += `\\RL{${escapeLatex(processedText)}}\\n`;
-                    }
-                    
                     if (questionType === 'equation') {
+                        latex += `\\RL{${escapeLatex(questionText)}}\\n`;
                         latex += `\\begin{equation}\\n  % הוסף כאן את המשוואה\\n\\end{equation}\\n\\n`;
                     } else if (questionType === 'graph') {
+                        latex += `\\RL{${escapeLatex(questionText)}}\\n`;
                         latex += `% צור גרף ב-Desmos או GeoGebra והוסף תמונה כאן\\n`;
-                        latex += `% \\includegraphics[width=0.8\\textwidth]{graph${index + 1}.png}\\n\\n`;
+                        latex += `% \\includegraphics[width=0.8\\textwidth]{graph.png}\\n\\n`;
                     } else if (questionType === 'table') {
+                        latex += `\\RL{${escapeLatex(questionText)}}\\n`;
                         latex += `% הוסף כאן טבלה:\\n`;
                         latex += `% \\begin{tabular}{|c|c|}\\n`;
                         latex += `% \\hline\\n`;
                         latex += `% & \\\\\\\\\\n`;
                         latex += `% \\hline\\n`;
                         latex += `% \\end{tabular}\\n\\n`;
+                    } else {
+                        latex += `\\RL{${escapeLatex(questionText)}}\\n`;
                     }
                     
                     latex += `\\vspace{${space}cm}\\n\\n`;
@@ -1181,7 +776,7 @@
                 .replace(/\\/g, '\\textbackslash{}')
                 .replace(/{/g, '\\{')
                 .replace(/}/g, '\\}')
-                .replace(/\$/g, '')
+                .replace(/\$/g, '\\$')
                 .replace(/#/g, '\\#')
                 .replace(/&/g, '\\&')
                 .replace(/%/g, '\\%')
@@ -1202,7 +797,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Initialize
+        // אתחול
         document.querySelectorAll('.step').forEach(step => {
             step.addEventListener('click', function() {
                 const stepNum = parseInt(this.dataset.step);
@@ -1213,13 +808,7 @@
             });
         });
 
-        // Focus on textarea when clicking question
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.question-text')) {
-                currentTextarea = e.target.closest('.question-text');
-            }
-        });
-
+        // עדכון תצוגה מקדימה בהתחלה
         updatePreview();
     </script>
 </body>
