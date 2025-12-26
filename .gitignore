@@ -21,6 +21,7 @@
 
 # Backup files
 *.bak-*
+*.bak.*
 *.backup*
 *~
 
