@@ -15,14 +15,32 @@
     ],
     "description": "תת-שאלה"
   },
+  "משוואה-שורה": {
+    "prefix": "משוואה",
+    "body": [
+      "\\\\begin{equation}",
+      "  ${1:ax^2 + bx + c = 0}",
+      "\\\\end{equation}",
+      "$0"
+    ],
+    "description": "משוואה ממוספרת"
+  },
+  "משוואה-תוך-טקסט": {
+    "prefix": "מש",
+    "body": [
+      "\\$${1:x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}}\\$",
+      "$0"
+    ],
+    "description": "משוואה בתוך טקסט"
+  },
   "גרף-ליניארי": {
     "prefix": "גרףלין",
     "body": [
       "\\\\begin{center}",
       "\\\\begin{tikzpicture}",
       "\\\\begin{axis}[",
-      "  xlabel={\\\\RL{${1:x}}},",
-      "  ylabel={\\\\RL{${2:y}}},",
+      "  xlabel={\\\\RL{${1:x}}},,",
+      "  ylabel={\\\\RL{${2:y}}},,",
       "  xmin=-5, xmax=5,",
       "  ymin=-5, ymax=5,",
       "  axis lines=middle,",
@@ -50,6 +68,21 @@
     ],
     "description": "טבלה"
   },
+  "טבלה-מתמטית": {
+    "prefix": "טבמתמטית",
+    "body": [
+      "\\\\begin{center}",
+      "\\\\begin{tabular}{|c|c|c|}",
+      "\\\\hline",
+      "\\\\RL{${1:x}} & \\\\RL{${2:y}} & \\\\RL{${3:f(x)}} \\\\\\\\\\\\hline",
+      "${4:1} & ${5:2} & ${6:3} \\\\\\\\\\\\hline",
+      "${7:4} & ${8:5} & ${9:6} \\\\\\\\\\\\hline",
+      "\\\\end{tabular}",
+      "\\\\end{center}",
+      "$0"
+    ],
+    "description": "טבלה מתמטית"
+  },
   "מקום-לתשובה": {
     "prefix": "תשובה",
     "body": [
@@ -57,5 +90,156 @@
       "$0"
     ],
     "description": "רווח לתשובה"
+  },
+  "ריבוע-חצי": {
+    "prefix": "ריבוע",
+    "body": [
+      "\\$\\\\boxed{${1:x^2}}\\$",
+      "$0"
+    ],
+    "description": "תשובה בריבוע"
+  },
+  "שברים": {
+    "prefix": "שבר",
+    "body": [
+      "\\$\\\\frac{${1:a}}{${2:b}}}\\$",
+      "$0"
+    ],
+    "description": "שבר"
+  },
+  "שורש": {
+    "prefix": "שורש",
+    "body": [
+      "\\$\\\\sqrt{${1:x}}\\$",
+      "$0"
+    ],
+    "description": "שורש ריבועי"
+  },
+  "שורש-מעוקב": {
+    "prefix": "שורש3",
+    "body": [
+      "\\$\\\\sqrt[${1:3}]{${2:x}}\\$",
+      "$0"
+    ],
+    "description": "שורש n-י"
+  },
+  "אינטגרל": {
+    "prefix": "אינטגרל",
+    "body": [
+      "\\$\\\\int_{${1:a}}^{${2:b}} ${3:f(x)} \\\\, dx\\$",
+      "$0"
+    ],
+    "description": "אינטגרל מוגדר"
+  },
+  "נגזרת": {
+    "prefix": "נגזרת",
+    "body": [
+      "\\$\\\\frac{d}{d${1:x}} ${2:f(x)} = ${3:f'(x)}\\$",
+      "$0"
+    ],
+    "description": "נגזרת"
+  },
+  "גבול": {
+    "prefix": "גבול",
+    "body": [
+      "\\$\\\\lim_{${1:x} \\\\to ${2:0}} ${3:f(x)} = ${4:L}\\$",
+      "$0"
+    ],
+    "description": "גבול"
+  },
+  "סכום": {
+    "prefix": "סכום",
+    "body": [
+      "\\$\\\\sum_{${1:i=1}}^{${2:n}} ${3:a_i} = ${4:S}\\$",
+      "$0"
+    ],
+    "description": "סכום"
+  },
+  "מטריצה": {
+    "prefix": "מטריצה",
+    "body": [
+      "\\$\\\\begin{pmatrix}",
+      "  ${1:a} & ${2:b} \\\\\\\\\\\\",
+      "  ${3:c} & ${4:d}",
+      "\\\\end{pmatrix}\\$",
+      "$0"
+    ],
+    "description": "מטריצה"
+  },
+  "וקטור": {
+    "prefix": "וקטור",
+    "body": [
+      "\\$\\\\vec{${1:v}} = (${2:x}, ${3:y}, ${4:z})\\$",
+      "$0"
+    ],
+    "description": "וקטור"
+  },
+  "קבוצה": {
+    "prefix": "קבוצה",
+    "body": [
+      "\\$A = \\\\{${1:x} \\\\mid ${2:P(x)}\\\\}\\$",
+      "$0"
+    ],
+    "description": "קבוצה"
+  },
+  "רשימה-ממוספרת": {
+    "prefix": "רשימה",
+    "body": [
+      "\\\\begin{enumerate}",
+      "  \\\\item ${1:פריט ראשון}",
+      "  \\\\item ${2:פריט שני}",
+      "  \\\\item ${3:פריט שלישי}",
+      "\\\\end{enumerate}",
+      "$0"
+    ],
+    "description": "רשימה ממוספרת"
+  },
+  "רשימה-בולטים": {
+    "prefix": "בולטים",
+    "body": [
+      "\\\\begin{itemize}",
+      "  \\\\item ${1:פריט ראשון}",
+      "  \\\\item ${2:פריט שני}",
+      "  \\\\item ${3:פריט שלישי}",
+      "\\\\end{itemize}",
+      "$0"
+    ],
+    "description": "רשימת בולטים"
+  },
+  "הערה": {
+    "prefix": "הערה",
+    "body": [
+      "\\\\begin{comment}",
+      "${1:הערה - לא יוצג ב-PDF}",
+      "\\\\end{comment}",
+      "$0"
+    ],
+    "description": "הערה (לא מוצגת)"
+  },
+  "קישור-Desmos": {
+    "prefix": "דסמוס",
+    "body": [
+      "\\\\href{https://www.desmos.com/calculator}{${1:פתח Desmos - מחשבון גרפי}}",
+      "$0"
+    ],
+    "description": "קישור ל-Desmos"
+  },
+  "קישור-GeoGebra": {
+    "prefix": "גאוגברה",
+    "body": [
+      "\\\\href{https://www.geogebra.org/calculator}{${1:פתח GeoGebra - מתמטיקה דינמית}}",
+      "$0"
+    ],
+    "description": "קישור ל-GeoGebra"
+  },
+  "הוראה-גרף": {
+    "prefix": "גרף",
+    "body": [
+      "\\\\section*{\\\\RL{שאלה ${1:1}: גרפים}}",
+      "\\\\RL{פתח את} \\\\href{https://www.desmos.com/calculator}{\\\\RL{Desmos}} \\\\RL{וצייר את הגרף:}",
+      "$$${2:y = 2x + 1}$$",
+      "$0"
+    ],
+    "description": "שאלה עם הוראה לשימוש ב-Desmos"
   }
 }

@@ -1,10 +1,21 @@
 {
+  // ============================================
+  // LaTeX Workshop - הגדרות מתקדמות ביותר
+  // ============================================
   "latex-workshop.latex.autoBuild.run": "onSave",
   "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
   "latex-workshop.latex.recipes": [
     {
       "name": "latexmk (xelatex)",
       "tools": ["xelatexmk"]
+    },
+    {
+      "name": "xelatex",
+      "tools": ["xelatex"]
+    },
+    {
+      "name": "lualatex",
+      "tools": ["lualatexmk"]
     }
   ],
   "latex-workshop.latex.tools": [
@@ -16,14 +27,220 @@
         "-synctex=1",
         "-interaction=nonstopmode",
         "-file-line-error",
+        "-shell-escape",
+        "-pdf",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-shell-escape",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "lualatexmk",
+      "command": "latexmk",
+      "args": [
+        "-lualatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-shell-escape",
         "-pdf",
         "%DOC%"
       ],
       "env": {}
     }
   ],
+  
+  // תצוגה מקדימה PDF - מתקדמת
   "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+  "latex-workshop.view.pdf.internal.synctex.scrollMode": 1,
+  "latex-workshop.view.pdf.zoom": "page-width",
+  "latex-workshop.view.pdf.scrollMode": 1,
+  "latex-workshop.view.pdf.spreadMode": 0,
+  "latex-workshop.view.pdf.internal.viewer.pdfViewer": "auto",
+  "latex-workshop.view.pdf.internal.viewer.scrollMode": 1,
+  
+  // SyncTeX - מתקדם ביותר
   "latex-workshop.synctex.afterBuild.enabled": true,
+  "latex-workshop.synctex.path": "synctex.exe",
+  "latex-workshop.synctex.synctexjs.enabled": true,
+  "latex-workshop.synctex.synctexjs.server": "",
+  
+  // שמירה אוטומטית - מותאם אישית
   "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 1000
+  "files.autoSaveDelay": 500,
+  
+  // עברית - תמיכה מלאה ומתקדמת
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "[latex]": {
+    "files.encoding": "utf8",
+    "editor.formatOnSave": false,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    }
+  },
+  "[markdown]": {
+    "files.encoding": "utf8",
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  
+  // עורך - הגדרות מתקדמות
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": true,
+  "editor.minimap.maxColumn": 120,
+  "editor.suggestSelection": "first",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.fontLigatures": true,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.smoothScrolling": true,
+  
+  // LaTeX - הגדרות מתקדמות ביותר
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux",
+    "*.bbl",
+    "*.blg",
+    "*.idx",
+    "*.ind",
+    "*.lof",
+    "*.lot",
+    "*.out",
+    "*.toc",
+    "*.acn",
+    "*.acr",
+    "*.alg",
+    "*.glg",
+    "*.glo",
+    "*.gls",
+    "*.fls",
+    "*.log",
+    "*.fdb_latexmk",
+    "*.snm",
+    "*.nav",
+    "*.xdv",
+    "*.synctex.gz",
+    "*.synctex(busy)",
+    "*.figlist",
+    "*.makefile",
+    "*.auxlock"
+  ],
+  "latex-workshop.latex.autoClean.run": "onBuilt",
+  "latex-workshop.latex.outDir": "%DIR%",
+  "latex-workshop.latex.clean.subfolder.enabled": true,
+  
+  // IntelliSense - מתקדם ביותר
+  "latex-workshop.intellisense.package.enabled": true,
+  "latex-workshop.intellisense.unimathsymbols.enabled": true,
+  "latex-workshop.intellisense.citation.label": "bibtex key",
+  "latex-workshop.intellisense.citation.type": "browser",
+  "latex-workshop.intellisense.surroundCommand.enabled": true,
+  "latex-workshop.intellisense.package.exclude": [],
+  
+  // Build - מתקדם
+  "latex-workshop.latex.autoBuild.interval": 3000,
+  "latex-workshop.latex.autoBuild.delay": 500,
+  "latex-workshop.latex.build.clearCache.enabled": true,
+  
+  // Terminal - מתקדם
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "line",
+  
+  // Git - סנכרון אוטומטי מתקדם
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.enableCommitSigning": false,
+  "git.pruneOnFetch": true,
+  
+  // File Explorer - שיפורים
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  
+  // Workbench - שיפורים
+  "workbench.editor.enablePreview": false,
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.colorTheme": "Default Dark+",
+  "workbench.iconTheme": "vs-seti",
+  
+  // Spell Checker - עברית
+  "cSpell.language": "en,he",
+  "cSpell.enabled": true,
+  
+  // Error Lens - הצגת שגיאות מתקדמת
+  "errorLens.enabled": true,
+  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+  
+  // Todo Tree - ניהול משימות
+  "todo-tree.general.tags": [
+    "TODO",
+    "FIXME",
+    "NOTE",
+    "BUG",
+    "HACK",
+    "XXX"
+  ],
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "foreground": "#ff6b6b",
+      "iconColour": "#ff6b6b"
+    },
+    "FIXME": {
+      "foreground": "#ff6b6b",
+      "iconColour": "#ff6b6b"
+    }
+  },
+  
+  // Code Runner - הרצת קוד
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.saveFileBeforeRun": true,
+  "code-runner.runInTerminal": true,
+  
+  // Live Server - שרת מקומי
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.CustomBrowser": "chrome",
+  
+  // Prettier - פורמט קוד
+  "prettier.enable": true,
+  "prettier.singleQuote": false,
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false
 }

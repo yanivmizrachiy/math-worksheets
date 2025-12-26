@@ -42,6 +42,9 @@ Desktop.ini
 # System files
 .DS_Store
 
+# Desktop links - שומרים את הקישורים!
+# מערכת דפי עבודה במתמטיקה.url
+
 # MiKTeX
 *.mf
 *.tfm
@@ -49,4 +52,7 @@ Desktop.ini
 
 # Logs
 out/*.log
+
+# History - שומרים את ההיסטוריה!
+# history/
 

@@ -1,0 +1,36 @@
+{
+  "name": "math-worksheets",
+  "version": "1.0.0",
+  "description": "מערכת LaTeX/XeLaTeX ליצירת דפי עבודה במתמטיקה בעברית",
+  "scripts": {
+    "build": "latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error -pdf tex/main.tex",
+    "build:watch": "latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error -pdf -pvc tex/main.tex",
+    "clean": "latexmk -C tex/main.tex",
+    "sync": "powershell -ExecutionPolicy Bypass -File ./SYNC_TO_GITHUB.ps1",
+    "fix": "powershell -ExecutionPolicy Bypass -File ./FIX_PLAN.ps1",
+    "diagnose": "powershell -ExecutionPolicy Bypass -File ./DIAGNOSE_AND_FIX.ps1",
+    "desktop-link": "powershell -ExecutionPolicy Bypass -File ./CREATE_DESKTOP_LINK.ps1",
+    "green-icon": "powershell -ExecutionPolicy Bypass -File ./CREATE_GREEN_ICON_ADVANCED.ps1",
+    "track": "powershell -ExecutionPolicy Bypass -File ./TRACK_CHANGES.ps1",
+    "add-task": "powershell -ExecutionPolicy Bypass -File ./ADD_TASK.ps1",
+    "history": "powershell -ExecutionPolicy Bypass -File ./VIEW_HISTORY.ps1",
+    "serve": "live-server --port=5500 --open=index.html",
+    "lint": "prettier --write \"**/*.{js,json,html,css,md}\"",
+    "format": "prettier --write \"**/*.{js,json,html,css,md}\""
+  },
+  "keywords": [
+    "latex",
+    "xelatex",
+    "hebrew",
+    "math",
+    "worksheets",
+    "education"
+  ],
+  "author": "yanivmiz77@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "live-server": "^1.2.2"
+  }
+}
+

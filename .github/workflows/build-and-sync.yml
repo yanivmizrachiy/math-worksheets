@@ -1,0 +1,33 @@
+name: Build and Sync LaTeX Project
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup TeX Live
+        uses: tecosaur/setup-texlive@v1
+        with:
+          packages: texlive-full
+          
+      - name: Build LaTeX document
+        run: |
+          cd tex
+          latexmk -xelatex -interaction=nonstopmode -file-line-error main.tex
+          
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-output
+          path: main.pdf
+          retention-days: 30
+

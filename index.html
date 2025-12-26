@@ -3,8 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת דפי עבודה במתמטיקה - Math Worksheets System</title>
+    <title>מערכת דפי עבודה במתמטיקה - Premium Edition</title>
     <style>
+        :root {
+            /* צבעים פרימיום יוקרתיים - שיפור מתקדם */
+            --gold-premium: #D4AF37;
+            --gold-light: #FFD700;
+            --gold-dark: #B8860B;
+            --gold-glow: #FFE55C;
+            --burgundy: #8B0000;
+            --burgundy-light: #A52A2A;
+            --burgundy-dark: #5C0000;
+            --navy-premium: #1a1a2e;
+            --navy-light: #16213e;
+            --navy-dark: #0f1419;
+            --bg-dark: #0a0a0a;
+            --bg-medium: #1a1a1a;
+            --bg-light: #2a2a2a;
+            --text-light: #f5f5f5;
+            --text-muted: #cccccc;
+            --shadow-premium: 0 10px 40px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.2);
+            --shadow-hover: 0 20px 60px rgba(212, 175, 55, 0.6), 0 0 30px rgba(212, 175, 55, 0.4);
+            --shadow-glow: 0 0 30px rgba(212, 175, 55, 0.8);
+            --gradient-gold: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+            --gradient-premium: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(139, 0, 0, 0.2) 50%, rgba(26, 26, 46, 0.2) 100%);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,126 +37,272 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--navy-dark) 50%, var(--bg-medium) 100%);
             min-height: 100vh;
             padding: 20px;
-            color: #333;
+            color: var(--text-light);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 50% 20%, rgba(26, 26, 46, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: backgroundPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: linear-gradient(145deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+            border-radius: 25px;
+            box-shadow: var(--shadow-premium);
             overflow: hidden;
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(212, 175, 55, 0.2);
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--gold-premium) 0%, var(--burgundy) 50%, var(--navy-premium) 100%);
             color: white;
-            padding: 40px;
+            padding: 50px 40px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 12px rgba(0,0,0,0.6), 0 0 30px rgba(212, 175, 55, 0.5);
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(45deg, #fff, var(--gold-light), #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .header p {
-            font-size: 1.2em;
+            font-size: 1.3em;
             opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .content {
-            padding: 40px;
+            padding: 50px;
+            background: rgba(26, 26, 46, 0.3);
         }
-
-        .section {
-            margin-bottom: 40px;
+  
+  .section { 
+            margin-bottom: 50px;
         }
 
         .section-title {
-            font-size: 1.8em;
-            color: #667eea;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+            font-size: 2.2em;
+            background: linear-gradient(135deg, var(--gold-premium), var(--gold-light), var(--gold-premium));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--gold-premium);
+            position: relative;
+            animation: titleGradient 4s ease infinite;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        @keyframes titleGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            right: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--burgundy));
         }
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
         }
 
         .card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            background: linear-gradient(145deg, rgba(42, 42, 42, 0.9), rgba(26, 26, 46, 0.9));
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(212, 175, 55, 0.4);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border-color: #667eea;
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: var(--shadow-hover), var(--shadow-glow);
+            border-color: var(--gold-light);
+            background: linear-gradient(145deg, rgba(52, 52, 52, 0.95), rgba(36, 36, 56, 0.95));
+            border-width: 3px;
         }
 
         .card-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-            display: block;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+    display: block; 
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+            transition: transform 0.3s;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .card-title {
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
+            color: var(--gold-light);
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
 
         .card-description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05em;
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 16px 32px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: none;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.05em;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .btn:active {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--gradient-gold);
+            color: #000;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4), 0 0 15px rgba(212, 175, 55, 0.2);
         }
 
         .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.6), 0 0 25px rgba(255, 215, 0, 0.5);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+            background: linear-gradient(135deg, #2d8659 0%, #1e5d3f 100%);
             color: white;
-        }
-
-        .btn-success:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
         }
 
         .btn-info {
@@ -140,123 +310,220 @@
             color: white;
         }
 
-        .btn-info:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-        }
-
         .btn-warning {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background: linear-gradient(135deg, var(--burgundy-light) 0%, var(--burgundy) 100%);
             color: white;
-        }
-
-        .btn-warning:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            background: linear-gradient(135deg, #c0392b 0%, #8b1a1a 100%);
             color: white;
-        }
-
-        .btn-danger:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
         }
 
         .btn-purple {
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            background: linear-gradient(135deg, #9b59b6 0%, #7d3c98 100%);
             color: white;
-        }
-
-        .btn-purple:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
         }
 
         .btn-teal {
-            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+            background: linear-gradient(135deg, #1abc9c 0%, #148f77 100%);
             color: white;
-        }
-
-        .btn-teal:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.4);
         }
 
         .quick-start {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(139, 0, 0, 0.2) 100%);
             color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid var(--gold-premium);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
         }
 
         .quick-start h2 {
-            margin-bottom: 15px;
-            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: var(--gold-light);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
 
         .quick-start ol {
-            margin-right: 20px;
-            line-height: 2;
+            margin-right: 25px;
+            line-height: 2.5;
+            font-size: 1.1em;
         }
 
         .quick-start li {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            padding-right: 10px;
+        }
+
+        .quick-start code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid var(--gold-premium);
+            color: var(--gold-light);
         }
 
         .code-block {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--gold-light);
+            padding: 18px;
+    border-radius: 10px;
             font-family: 'Courier New', monospace;
-            margin: 10px 0;
+            margin: 15px 0;
             overflow-x: auto;
             direction: ltr;
             text-align: left;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .status-badge {
             display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.95em;
             font-weight: bold;
-            margin-right: 10px;
+            margin-left: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
         }
 
         .status-ready {
-            background: #2ecc71;
+            background: linear-gradient(135deg, #2d8659, #1e5d3f);
             color: white;
         }
 
         .status-optional {
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
         }
 
         .footer {
-            background: #2d2d2d;
-            color: white;
-            padding: 30px;
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--bg-dark) 100%);
+            color: var(--text-muted);
+            padding: 40px;
             text-align: center;
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
         }
 
         .footer a {
-            color: #667eea;
+            color: var(--gold-light);
             text-decoration: none;
+            transition: all 0.3s;
+            border-bottom: 1px solid transparent;
         }
 
         .footer a:hover {
-            text-decoration: underline;
+            color: var(--gold-premium);
+            border-bottom-color: var(--gold-premium);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        /* תצוגה מקדימה PDF */
+        .pdf-preview-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .pdf-preview-container.active {
+            display: flex;
+        }
+
+        .pdf-preview-header {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(26, 26, 46, 0.9);
+            border-bottom: 2px solid var(--gold-premium);
+            margin-bottom: 20px;
+        }
+
+        .pdf-preview-title {
+            color: var(--gold-light);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .pdf-preview-close {
+            background: linear-gradient(135deg, var(--burgundy), var(--burgundy-dark));
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .pdf-preview-close:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.5);
+        }
+
+        .pdf-preview-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .pdf-preview-btn {
+            background: linear-gradient(135deg, var(--gold-premium), var(--gold-dark));
+            color: #000;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+    cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .pdf-preview-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .pdf-preview-frame {
+            width: 100%;
+            max-width: 1200px;
+            height: calc(100vh - 150px);
+            border: 3px solid var(--gold-premium);
+            border-radius: 10px;
+            box-shadow: 0 10px 50px rgba(212, 175, 55, 0.3);
+            background: white;
+        }
+
+        .pdf-preview-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 7px;
+        }
+
+        .preview-btn {
+            background: linear-gradient(135deg, var(--gold-premium), var(--gold-dark));
+            color: #000;
+            margin-right: 10px;
         }
 
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 1.8em;
+                font-size: 2em;
             }
             
             .cards-grid {
@@ -264,16 +531,43 @@
             }
             
             .content {
-                padding: 20px;
+                padding: 30px 20px;
+            }
+
+            .section-title {
+                font-size: 1.6em;
             }
         }
-    </style>
+
+        /* אנימציות נוספות */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+</style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 מערכת דפי עבודה במתמטיקה</h1>
-            <p>מערכת LaTeX/XeLaTeX ליצירת דפי עבודה מקצועיים בעברית</p>
+            <h1>✨ מערכת דפי עבודה במתמטיקה - Premium Edition ✨</h1>
+            <p>מערכת LaTeX/XeLaTeX מקצועית ליצירת דפי עבודה יוקרתיים בעברית</p>
         </div>
 
         <div class="content">
@@ -283,7 +577,7 @@
                 <ol>
                     <li>ערוך את <code>tex/main.tex</code> בתוכן שלך</li>
                     <li>הרץ: <code class="code-block">latexmk -pdfxe tex\main.tex</code></li>
-                    <li>פתח את <code>main.pdf</code> לראות את התוצאה!</li>
+                    <li>פתח את <code>main.pdf</code> לראות את התוצאה! או השתמש בכפתור תצוגה מקדימה למטה</li>
                 </ol>
             </div>
 
@@ -299,7 +593,7 @@
                             כולל כותרות, שאלות, משוואות וטבלאות.
                         </div>
                         <span class="status-badge status-ready">מוכן לשימוש</span>
-                        <a href="tex/main.tex" class="btn btn-primary">פתח קובץ</a>
+                        <a href="tex/main.tex" class="btn btn-primary"><span>פתח קובץ</span></a>
                     </div>
 
                     <div class="card">
@@ -310,7 +604,7 @@
                             וחבילות LaTeX בסיסיות. ניתן להרחיב לפי צורך.
                         </div>
                         <span class="status-badge status-ready">מוכן לשימוש</span>
-                        <a href="tex/worksheet.sty" class="btn btn-success">פתח קובץ</a>
+                        <a href="tex/worksheet.sty" class="btn btn-success"><span>פתח קובץ</span></a>
                     </div>
 
                     <div class="card">
@@ -318,16 +612,17 @@
                         <div class="card-title">main.pdf</div>
                         <div class="card-description">
                             התוצר הסופי! PDF שנוצר מהקוד שלך. 
-                            פתח כדי לראות את דף העבודה המסודר.
+                            פתח כדי לראות את דף העבודה המסודר. יש תצוגה מקדימה לפני הדפסה/הורדה!
                         </div>
                         <span class="status-badge status-ready">קיים</span>
-                        <a href="main.pdf" target="_blank" class="btn btn-info">פתח PDF</a>
+                        <button onclick="showPDFPreview('main.pdf')" class="btn preview-btn"><span>תצוגה מקדימה</span></button>
+                        <a href="main.pdf" target="_blank" class="btn btn-info"><span>פתח PDF</span></a>
                     </div>
                 </div>
             </div>
 
             <!-- סנכרון GitHub -->
-            <div class="section">
+<div class="section">
                 <h2 class="section-title">☁️ סנכרון GitHub - ענן וגיבוי</h2>
                 <div class="cards-grid">
                     <div class="card">
@@ -339,7 +634,7 @@
                             שתרצה לסנכרן את העדכונים.
                         </div>
                         <span class="status-badge status-ready">מוכן</span>
-                        <button onclick="runScript('SYNC_TO_GITHUB.ps1')" class="btn btn-purple">סנכרן ל-GitHub</button>
+                        <button onclick="runScript('SYNC_TO_GITHUB.ps1')" class="btn btn-purple"><span>סנכרן ל-GitHub</span></button>
                     </div>
 
                     <div class="card">
@@ -349,10 +644,20 @@
                             הוראות מהירות לסנכרון GitHub - 3 שלבים פשוטים 
                             כדי להתחיל לסנכרן את הפרויקט שלך ל-GitHub.
                         </div>
-                        <a href="README_GITHUB.md" class="btn btn-teal">קרא הוראות</a>
+                        <a href="README_GITHUB.md" class="btn btn-teal"><span>קרא הוראות</span></a>
+  </div>
+
+                    <div class="card">
+                        <span class="card-icon">⚙️</span>
+                        <div class="card-title">SETUP_GITHUB.md</div>
+                        <div class="card-description">
+                            מדריך מפורט להגדרת GitHub - הסבר מפורט על כל 
+                            אפשרויות הסנכרון האוטומטי כולל Task Scheduler.
+                        </div>
+                        <a href="SETUP_GITHUB.md" class="btn btn-info"><span>קרא מדריך</span></a>
                     </div>
                 </div>
-            </div>
+  </div>
 
             <!-- כלי עזר -->
             <div class="section">
@@ -366,8 +671,8 @@
                             build ובדיקת PDF. מומלץ להריץ אם יש בעיות.
                         </div>
                         <span class="status-badge status-ready">מוכן</span>
-                        <button onclick="runScript('FIX_PLAN.ps1')" class="btn btn-warning">הרץ סקריפט</button>
-                    </div>
+                        <button onclick="runScript('FIX_PLAN.ps1')" class="btn btn-warning"><span>הרץ סקריפט</span></button>
+  </div>
 
                     <div class="card">
                         <span class="card-icon">🔍</span>
@@ -377,7 +682,60 @@
                             מתקן אוטומטית, ויוצר דוח מפורט.
                         </div>
                         <span class="status-badge status-ready">מוכן</span>
-                        <button onclick="runScript('DIAGNOSE_AND_FIX.ps1')" class="btn btn-danger">הרץ בדיקה</button>
+                        <button onclick="runScript('DIAGNOSE_AND_FIX.ps1')" class="btn btn-danger"><span>הרץ בדיקה</span></button>
+  </div>
+
+                    <div class="card">
+                        <span class="card-icon">📦</span>
+                        <div class="card-title">fix-miktex-packages.ps1</div>
+                        <div class="card-description">
+                            תיקון חבילות MiKTeX - מתקין חבילות חסרות 
+                            ומתקן בעיות תלויות ב-MiKTeX.
+                        </div>
+                        <span class="status-badge status-optional">אופציונלי</span>
+                        <button onclick="runScript('fix-miktex-packages.ps1')" class="btn btn-info"><span>הרץ תיקון</span></button>
+                    </div>
+                </div>
+  </div>
+
+            <!-- כלים מתמטיים -->
+            <div class="section">
+                <h2 class="section-title">📐 כלים מתמטיים - גרפים והדמיות</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <span class="card-icon">📈</span>
+                        <div class="card-title">Desmos - מחשבון גרפי</div>
+                        <div class="card-description">
+                            מחשבון גרפי אינטראקטיבי חזק - ציור גרפים, פתרון משוואות, 
+                            יצירת טבלאות וכלים מתמטיים מתקדמים. מושלם ליצירת גרפים 
+                            ללא צורך בהתקנות!
+                        </div>
+                        <span class="status-badge status-ready">חינמי וחזק</span>
+                        <a href="https://www.desmos.com/calculator" target="_blank" class="btn btn-primary"><span>פתח Desmos</span></a>
+                        <a href="https://www.desmos.com/geometry" target="_blank" class="btn btn-info" style="margin-right: 10px;"><span>Desmos Geometry</span></a>
+  </div>
+
+                    <div class="card">
+                        <span class="card-icon">🔷</span>
+                        <div class="card-title">GeoGebra - מתמטיקה דינמית</div>
+                        <div class="card-description">
+                            כלי מתמטיקה דינמי מתקדם - גיאומטריה, אלגברה, סטטיסטיקה 
+                            וחישוב. מצוין ליצירת הדמיות אינטראקטיביות ולמידה מתמטיקה 
+                            בצורה ויזואלית!
+                        </div>
+                        <span class="status-badge status-ready">חינמי וחזק</span>
+                        <a href="https://www.geogebra.org/calculator" target="_blank" class="btn btn-success"><span>פתח GeoGebra</span></a>
+                        <a href="https://www.geogebra.org/geometry" target="_blank" class="btn btn-info" style="margin-right: 10px;"><span>GeoGebra Geometry</span></a>
+</div>
+
+                    <div class="card">
+                        <span class="card-icon">📖</span>
+                        <div class="card-title">מדריך שימוש</div>
+                        <div class="card-description">
+                            מדריך מפורט לשימוש ב-Desmos ו-GeoGebra עם דוגמאות מעשיות. 
+                            למד איך לשלב את הכלים בדפי העבודה שלך.
+                        </div>
+                        <a href="MATH_TOOLS_GUIDE.md" class="btn btn-warning"><span>קרא מדריך</span></a>
                     </div>
                 </div>
             </div>
@@ -393,7 +751,7 @@
                             מדריך מהיר להתחלה - הסבר קצר על הפרויקט, 
                             התקנה, ושימוש בסיסי.
                         </div>
-                        <a href="README.md" class="btn btn-info">קרא מדריך</a>
+                        <a href="README.md" class="btn btn-info"><span>קרא מדריך</span></a>
                     </div>
 
                     <div class="card">
@@ -403,7 +761,7 @@
                             דוח מפורט בעברית - כל ההיסטוריה, בעיות, 
                             פתרונות, ושינויים שבוצעו בפרויקט.
                         </div>
-                        <a href="REPORT_PROJECT_FULL.md" class="btn btn-purple">קרא דוח</a>
+                        <a href="REPORT_PROJECT_FULL.md" class="btn btn-purple"><span>קרא דוח</span></a>
                     </div>
 
                     <div class="card">
@@ -413,7 +771,7 @@
                             מצב הפרויקט ב-JSON - בעיות, תיקונים, 
                             תלויות, וסטטוס build מעודכן.
                         </div>
-                        <a href="STATUS.json" class="btn btn-teal">צפה במצב</a>
+                        <a href="STATUS.json" class="btn btn-teal"><span>צפה במצב</span></a>
                     </div>
 
                     <div class="card">
@@ -423,7 +781,17 @@
                             סיכום בעיות - רשימה מפורטת של כל הבעיות 
                             שנמצאו והפתרונות שהוחלו.
                         </div>
-                        <a href="PROBLEMS_SUMMARY.md" class="btn btn-warning">קרא סיכום</a>
+                        <a href="PROBLEMS_SUMMARY.md" class="btn btn-warning"><span>קרא סיכום</span></a>
+                    </div>
+
+                    <div class="card">
+                        <span class="card-icon">🔗</span>
+                        <div class="card-title">LINKS.md</div>
+                        <div class="card-description">
+                            קישורים שימושיים - רשימת קישורים לכלים, 
+                            משאבים, ותיעוד חיצוני רלוונטי.
+                        </div>
+                        <a href="LINKS.md" class="btn btn-success"><span>צפה בקישורים</span></a>
                     </div>
                 </div>
             </div>
@@ -434,7 +802,7 @@
                 <div class="cards-grid">
                     <div class="card">
                         <span class="card-icon">▶️</span>
-                        <div class="card-title">Build PDF</div>
+                        <div class="card-title">בניית PDF</div>
                         <div class="card-description">
                             יצירת PDF מהקוד שלך
                         </div>
@@ -454,36 +822,112 @@
                         <span class="card-icon">🔧</span>
                         <div class="card-title">תיקון אוטומטי</div>
                         <div class="card-description">
-                            הרצת סקריפט תיקון
+                            הרצת סקריפט תיקון אוטומטי
                         </div>
                         <div class="code-block">.\FIX_PLAN.ps1</div>
+                    </div>
+
+                    <div class="card">
+                        <span class="card-icon">🔄</span>
+                        <div class="card-title">סנכרון ל-GitHub</div>
+                        <div class="card-description">
+                            סנכרון אוטומטי של כל השינויים ל-GitHub
+                        </div>
+                        <div class="code-block">.\SYNC_TO_GITHUB.ps1</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            <p>מערכת דפי עבודה במתמטיקה - Math Worksheets System</p>
-            <p>נבנה עם LaTeX/XeLaTeX | MiKTeX 24.1</p>
-            <p style="margin-top: 10px;">
+            <p style="font-size: 1.2em; margin-bottom: 10px;">✨ מערכת דפי עבודה במתמטיקה - Premium Edition ✨</p>
+            <p>נבנה עם LaTeX/XeLaTeX | MiKTeX 24.1 | VS Code Integration</p>
+            <p style="margin-top: 15px;">
                 <a href="LINKS.md">קישורים</a> | 
-                <a href="STATUS.json">מצב מערכת</a>
+                <a href="STATUS.json">מצב מערכת</a> |
+                <a href="IMPROVEMENT_PLAN.md">תוכנית שיפורים</a>
             </p>
         </div>
     </div>
 
+    <!-- תצוגה מקדימה PDF -->
+    <div id="pdfPreview" class="pdf-preview-container">
+        <div class="pdf-preview-header">
+            <div class="pdf-preview-title">תצוגה מקדימה - PDF</div>
+            <div class="pdf-preview-actions">
+                <button onclick="printPDF()" class="pdf-preview-btn">🖨️ הדפס</button>
+                <button onclick="downloadPDF()" class="pdf-preview-btn">💾 הורד</button>
+                <button onclick="closePDFPreview()" class="pdf-preview-close">✕ סגור</button>
+            </div>
+        </div>
+        <div class="pdf-preview-frame">
+            <iframe id="pdfFrame" src=""></iframe>
+        </div>
+    </div>
+
     <script>
-        function runScript(scriptName) {
-            const command = `PowerShell -ExecutionPolicy Bypass -File .\\${scriptName}`;
-            const message = `להרצת הסקריפט, פתח PowerShell והרץ:\n\n${command}`;
-            
-            if (confirm(message + '\n\nלפתוח PowerShell עכשיו?')) {
-                // פתיחת PowerShell (Windows)
-                window.location.href = `powershell:${command}`;
-            } else {
-                // הצגת ההוראה
-                alert('הוראות הרצה:\n\n1. פתח PowerShell\n2. נווט לתיקיית הפרויקט\n3. הרץ: ' + command);
+        let currentPDF = '';
+
+        function showPDFPreview(pdfPath) {
+            // בדיקה אם הקובץ קיים
+            fetch(pdfPath, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        currentPDF = pdfPath;
+                        const preview = document.getElementById('pdfPreview');
+                        const frame = document.getElementById('pdfFrame');
+                        frame.src = pdfPath;
+                        preview.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        alert('הקובץ PDF לא נמצא.\n\nאנא בנה את ה-PDF קודם:\nlatexmk -pdfxe tex\\main.tex\n\nאו הרץ את Task "Build LaTeX PDF" ב-VS Code (Ctrl+Alt+B)');
+                    }
+                })
+                .catch(error => {
+                    alert('הקובץ PDF לא נמצא.\n\nאנא בנה את ה-PDF קודם:\nlatexmk -pdfxe tex\\main.tex\n\nאו הרץ את Task "Build LaTeX PDF" ב-VS Code (Ctrl+Alt+B)');
+                });
+        }
+
+        function closePDFPreview() {
+            const preview = document.getElementById('pdfPreview');
+            preview.classList.remove('active');
+            document.body.style.overflow = '';
+            currentPDF = '';
+        }
+
+        function printPDF() {
+            if (currentPDF) {
+                window.open(currentPDF, '_blank').print();
             }
+        }
+
+        function downloadPDF() {
+            if (currentPDF) {
+                const link = document.createElement('a');
+                link.href = currentPDF;
+                link.download = currentPDF;
+                link.click();
+            }
+        }
+
+        // סגירה עם ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePDFPreview();
+            }
+        });
+
+        // סגירה בלחיצה מחוץ ל-PDF
+        document.getElementById('pdfPreview').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePDFPreview();
+            }
+        });
+
+        function runScript(scriptName) {
+            // פתיחת חלון עם הוראות הרצה
+            const runScriptUrl = `RUN_SCRIPT.html?script=${encodeURIComponent(scriptName)}`;
+            window.open(runScriptUrl, '_blank', 'width=700,height=600,resizable=yes,scrollbars=yes');
         }
 
         // אנימציה לכפתורים
@@ -509,7 +953,7 @@
                     });
                 }
             });
-        });
-    </script>
+});
+</script>
 </body>
 </html>

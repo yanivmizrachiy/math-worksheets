@@ -1,0 +1,32 @@
+{
+  "recommendations": [
+    // LaTeX - הכלי הטוב ביותר
+    "james-yu.latex-workshop",
+    
+    // Git - כלים מתקדמים
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    "github.copilot",
+    
+    // PowerShell - כלי מתקדם
+    "ms-vscode.powershell",
+    
+    // כלים נוספים מודרניים וחזקים
+    "ms-python.python",
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-hebrew",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.hexeditor",
+    "usernamehw.errorlens",
+    "aaron-bond.better-comments",
+    "gruntfuggly.todo-tree",
+    "wayou.vscode-todo-highlight",
+    "formulahendry.code-runner",
+    "ritwickdey.liveserver"
+  ]
+}

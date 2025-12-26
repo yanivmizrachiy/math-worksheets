@@ -1,0 +1,207 @@
+{
+    "updates":  [
+                    {
+                        "time":  "2025-12-26 09:47:47",
+                        "system":  "MIZRACHI",
+                        "filesChanged":  7,
+                        "fileDetails":  [
+                                            {
+                                                "time":  "2025-12-26 09:47:47",
+                                                "status":  "Modified",
+                                                "file":  ".gitignore"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:47:47",
+                                                "status":  "Modified",
+                                                "file":  ".vscode/latex.json"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:47:47",
+                                                "status":  "Modified",
+                                                "file":  ".vscode/settings.json"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:47:47",
+                                                "status":  "Modified",
+                                                "file":  "LINKS.md"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:47:47",
+                                                "status":  "Added",
+                                                "file":  "\"Math Worksheets System.url\""
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:47:47",
+                                                "status":  "Modified",
+                                                "file":  "index.html"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:47:47",
+                                                "status":  "Modified",
+                                                "file":  "tex/worksheet.sty"
+                                            }
+                                        ],
+                        "user":  "yaniv"
+                    },
+                    {
+                        "time":  "2025-12-26 09:58:37",
+                        "system":  "MIZRACHI",
+                        "filesChanged":  13,
+                        "fileDetails":  [
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Modified",
+                                                "file":  ".gitignore"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Modified",
+                                                "file":  ".vscode/latex.json"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Modified",
+                                                "file":  ".vscode/settings.json"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Added",
+                                                "file":  "ADD_TASK.ps1"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Added",
+                                                "file":  "HISTORY_SYSTEM.md"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Modified",
+                                                "file":  "LINKS.md"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Added",
+                                                "file":  "\"Math Worksheets System.url\""
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Added",
+                                                "file":  "VIEW_HISTORY.ps1"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Added",
+                                                "file":  "history/.gitkeep"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Added",
+                                                "file":  "history/2025-12-26.json"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Added",
+                                                "file":  "history/all-history.json"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Modified",
+                                                "file":  "index.html"
+                                            },
+                                            {
+                                                "time":  "2025-12-26 09:58:37",
+                                                "status":  "Modified",
+                                                "file":  "tex/worksheet.sty"
+                                            }
+                                        ],
+                        "user":  "yaniv"
+                    }
+                ],
+    "notes":  [
+
+              ],
+    "changedFiles":  [
+                         {
+                             "firstTime":  "2025-12-26 09:47:47",
+                             "status":  "Modified",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "LINKS.md"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:47:47",
+                             "status":  "Modified",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  ".vscode/settings.json"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:58:37",
+                             "status":  "Added",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "history/2025-12-26.json"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:47:47",
+                             "status":  "Added",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "\"Math Worksheets System.url\""
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:58:37",
+                             "status":  "Added",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "ADD_TASK.ps1"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:47:47",
+                             "status":  "Modified",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  ".vscode/latex.json"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:47:47",
+                             "status":  "Modified",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "tex/worksheet.sty"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:58:37",
+                             "status":  "Added",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "history/all-history.json"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:58:37",
+                             "status":  "Added",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "VIEW_HISTORY.ps1"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:58:37",
+                             "status":  "Added",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "history/.gitkeep"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:58:37",
+                             "status":  "Added",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "HISTORY_SYSTEM.md"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:47:47",
+                             "status":  "Modified",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  ".gitignore"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:47:47",
+                             "status":  "Modified",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  "index.html"
+                         }
+                     ],
+    "date":  "2025-12-26",
+    "tasks":  [
+
+              ]
+}

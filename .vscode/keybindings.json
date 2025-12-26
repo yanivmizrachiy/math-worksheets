@@ -1,0 +1,33 @@
+[
+  {
+    "key": "ctrl+alt+b",
+    "command": "latex-workshop.build",
+    "when": "editorTextFocus && editorLangId == 'latex'"
+  },
+  {
+    "key": "ctrl+alt+v",
+    "command": "latex-workshop.view",
+    "when": "editorTextFocus && editorLangId == 'latex'"
+  },
+  {
+    "key": "ctrl+alt+c",
+    "command": "latex-workshop.clean",
+    "when": "editorTextFocus && editorLangId == 'latex'"
+  },
+  {
+    "key": "ctrl+alt+s",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Sync to GitHub"
+  },
+  {
+    "key": "ctrl+alt+f",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Run Fix Plan"
+  },
+  {
+    "key": "ctrl+alt+p",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Open PDF Preview"
+  }
+]
+

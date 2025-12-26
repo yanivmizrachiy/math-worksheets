@@ -16,6 +16,12 @@
 - [VS Code](https://code.visualstudio.com/download) - עורך קוד
 - [MiKTeX](https://miktex.org/download) - התפוצה של LaTeX
 
+#### כלים מתמטיים
+- [Desmos Calculator](https://www.desmos.com/calculator) - מחשבון גרפי אינטראקטיבי
+- [Desmos Geometry](https://www.desmos.com/geometry) - גיאומטריה אינטראקטיבית
+- [GeoGebra Calculator](https://www.geogebra.org/calculator) - מתמטיקה דינמית
+- [GeoGebra Geometry](https://www.geogebra.org/geometry) - גיאומטריה דינמית
+
 #### פונטים
 - [Heebo Font](https://fonts.google.com/specimen/Heebo) - פונט עברי חינמי מ-Google Fonts
 
