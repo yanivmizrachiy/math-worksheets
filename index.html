@@ -238,6 +238,52 @@
             font-size: 1.05em;
         }
 
+        .instructions-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .instructions-box::before {
+            content: '💡';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--navy-premium);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 1.2em;
+        }
+
+        .instructions-title {
+            color: var(--gold-light);
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .instructions-text {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1em;
+            margin: 0;
+        }
+
+        .instructions-text ol,
+        .instructions-text ul {
+            margin: 10px 0;
+            padding-right: 25px;
+        }
+
+        .instructions-text li {
+            margin-bottom: 8px;
+        }
+
         .btn {
             display: inline-block;
             padding: 16px 32px;
@@ -592,6 +638,18 @@
                             המסמך הראשי - כאן אתה עורך את התוכן של דף העבודה. 
                             כולל כותרות, שאלות, משוואות וטבלאות.
                         </div>
+                        <div class="instructions-box">
+                            <div class="instructions-title">איך להשתמש:</div>
+                            <div class="instructions-text">
+                                <ol>
+                                    <li>לחץ על "פתח קובץ" - הקובץ ייפתח ב-VS Code או עורך טקסט אחר</li>
+                                    <li>ערוך את התוכן - הוסף שאלות, משוואות, טבלאות</li>
+                                    <li>שמור את הקובץ (Ctrl+S)</li>
+                                    <li>בנה PDF באמצעות: <code>latexmk -pdfxe tex\main.tex</code></li>
+                                    <li>פתח את main.pdf לראות את התוצאה</li>
+                                </ol>
+                            </div>
+                        </div>
                         <span class="status-badge status-ready">מוכן לשימוש</span>
                         <a href="tex/main.tex" class="btn btn-primary"><span>פתח קובץ</span></a>
                     </div>
@@ -603,6 +661,18 @@
                             חבילת מאקרואים מותאמת - הגדרות עיצוב, שוליים, 
                             וחבילות LaTeX בסיסיות. ניתן להרחיב לפי צורך.
                         </div>
+                        <div class="instructions-box">
+                            <div class="instructions-title">איך להשתמש:</div>
+                            <div class="instructions-text">
+                                <ol>
+                                    <li>לחץ על "פתח קובץ" לעריכה</li>
+                                    <li>קובץ זה מכיל את הגדרות העיצוב - שוליים, גופנים, חבילות LaTeX</li>
+                                    <li>לשינוי עיצוב: ערוך את הערכים בקובץ (למשל: שוליים, גודל גופן)</li>
+                                    <li>שמור את הקובץ - השינויים יחולו על כל דפי העבודה</li>
+                                    <li><strong>⚠️ זהירות:</strong> שינוי לא נכון עלול לשבור את ה-build</li>
+                                </ol>
+                            </div>
+                        </div>
                         <span class="status-badge status-ready">מוכן לשימוש</span>
                         <a href="tex/worksheet.sty" class="btn btn-success"><span>פתח קובץ</span></a>
                     </div>
@@ -612,7 +682,18 @@
                         <div class="card-title">main.pdf</div>
                         <div class="card-description">
                             התוצר הסופי! PDF שנוצר מהקוד שלך. 
-                            פתח כדי לראות את דף העבודה המסודר. יש תצוגה מקדימה לפני הדפסה/הורדה!
+                            פתח כדי לראות את דף העבודה המסודר.
+                        </div>
+                        <div class="instructions-box">
+                            <div class="instructions-title">איך להשתמש:</div>
+                            <div class="instructions-text">
+                                <ul>
+                                    <li><strong>תצוגה מקדימה:</strong> לחץ כדי לראות את ה-PDF בתוך האתר, עם אפשרות הדפסה והורדה</li>
+                                    <li><strong>פתח PDF:</strong> פותח את הקובץ בדפדפן/תוכנית PDF שלך</li>
+                                    <li><strong>לפני שימוש:</strong> ודא שבנית את ה-PDF קודם באמצעות <code>latexmk -pdfxe tex\main.tex</code></li>
+                                    <li><strong>הדפסה:</strong> השתמש בכפתור "תצוגה מקדימה" ואז "הדפס"</li>
+                                </ul>
+                            </div>
                         </div>
                         <span class="status-badge status-ready">קיים</span>
                         <button onclick="showPDFPreview('main.pdf')" class="btn preview-btn"><span>תצוגה מקדימה</span></button>
@@ -630,8 +711,20 @@
                         <div class="card-title">SYNC_TO_GITHUB.ps1</div>
                         <div class="card-description">
                             סנכרון אוטומטי ל-GitHub - דוחף את כל השינויים שלך 
-                            ל-GitHub בחשבון yanivmiz77@gmail.com. הרץ בכל פעם 
-                            שתרצה לסנכרן את העדכונים.
+                            ל-GitHub בחשבון yanivmiz77@gmail.com.
+                        </div>
+                        <div class="instructions-box">
+                            <div class="instructions-title">איך להשתמש:</div>
+                            <div class="instructions-text">
+                                <ol>
+                                    <li>לחץ על "סנכרן ל-GitHub" - ייפתח חלון עם הוראות</li>
+                                    <li>העתק את הפקודה מהחלון</li>
+                                    <li>פתח PowerShell (חלון שחור עם שורת פקודה)</li>
+                                    <li>נווט לתיקיית הפרויקט: <code>cd C:\Users\yaniv\math-worksheets</code></li>
+                                    <li>הדבק והרץ את הפקודה - כל השינויים יועלו ל-GitHub</li>
+                                    <li><strong>⚠️ חשוב:</strong> ודא שיש לך הרשאות ל-GitHub</li>
+                                </ol>
+                            </div>
                         </div>
                         <span class="status-badge status-ready">מוכן</span>
                         <button onclick="runScript('SYNC_TO_GITHUB.ps1')" class="btn btn-purple"><span>סנכרן ל-GitHub</span></button>
@@ -668,11 +761,23 @@
                         <div class="card-title">FIX_PLAN.ps1</div>
                         <div class="card-description">
                             סקריפט תיקון אוטומטי - מריץ ניקוי, תיקונים, 
-                            build ובדיקת PDF. מומלץ להריץ אם יש בעיות.
+                            build ובדיקת PDF.
+                        </div>
+                        <div class="instructions-box">
+                            <div class="instructions-title">איך להשתמש:</div>
+                            <div class="instructions-text">
+                                <ol>
+                                    <li>לחץ על "הרץ סקריפט" - ייפתח חלון עם הוראות</li>
+                                    <li>העתק את הפקודה והרץ ב-PowerShell</li>
+                                    <li>הסקריפט ינקה קבצים ישנים, יתקן בעיות, ויבנה PDF מחדש</li>
+                                    <li><strong>מתי להשתמש:</strong> כאשר יש שגיאות build או PDF לא נוצר</li>
+                                    <li><strong>⏱️ זמן ביצוע:</strong> 1-2 דקות תלוי בגודל הפרויקט</li>
+                                </ol>
+                            </div>
                         </div>
                         <span class="status-badge status-ready">מוכן</span>
                         <button onclick="runScript('FIX_PLAN.ps1')" class="btn btn-warning"><span>הרץ סקריפט</span></button>
-  </div>
+                    </div>
 
                     <div class="card">
                         <span class="card-icon">🔍</span>
@@ -681,9 +786,22 @@
                             בדיקה מלאה אוטומטית - בודק כל בעיה אפשרית, 
                             מתקן אוטומטית, ויוצר דוח מפורט.
                         </div>
+                        <div class="instructions-box">
+                            <div class="instructions-title">איך להשתמש:</div>
+                            <div class="instructions-text">
+                                <ol>
+                                    <li>לחץ על "הרץ בדיקה" - ייפתח חלון עם הוראות</li>
+                                    <li>הרץ את הפקודה ב-PowerShell</li>
+                                    <li>הסקריפט יבדוק: קבצים חסרים, חבילות LaTeX, פונטים, שגיאות build</li>
+                                    <li>אם נמצאו בעיות - הסקריפט ינסה לתקן אותן אוטומטית</li>
+                                    <li>בסיום - תראה דוח מפורט על כל מה שנמצא ותוקן</li>
+                                    <li><strong>מתי להשתמש:</strong> כשמשהו לא עובד ולא יודעים מה הבעיה</li>
+                                </ol>
+                            </div>
+                        </div>
                         <span class="status-badge status-ready">מוכן</span>
                         <button onclick="runScript('DIAGNOSE_AND_FIX.ps1')" class="btn btn-danger"><span>הרץ בדיקה</span></button>
-  </div>
+                    </div>
 
                     <div class="card">
                         <span class="card-icon">📦</span>
@@ -710,10 +828,23 @@
                             יצירת טבלאות וכלים מתמטיים מתקדמים. מושלם ליצירת גרפים 
                             ללא צורך בהתקנות!
                         </div>
+                        <div class="instructions-box">
+                            <div class="instructions-title">איך להשתמש:</div>
+                            <div class="instructions-text">
+                                <ul>
+                                    <li><strong>פתח Desmos:</strong> פותח מחשבון גרפי - הקלד משוואות וצור גרפים</li>
+                                    <li><strong>Desmos Geometry:</strong> פותח כלי גיאומטריה - ציור צורות, מדידות</li>
+                                    <li><strong>יצירת גרף:</strong> הקלד משוואה (למשל: y=x^2) והגרף יופיע אוטומטית</li>
+                                    <li><strong>שיתוף:</strong> לחץ על "Share" כדי לקבל קישור או תמונה</li>
+                                    <li><strong>לחיפוש בדפי עבודה:</strong> העתק את הקישור או שמור את התמונה</li>
+                                    <li><strong>✅ חינמי לחלוטין</strong> - אין צורך בהרשמה</li>
+                                </ul>
+                            </div>
+                        </div>
                         <span class="status-badge status-ready">חינמי וחזק</span>
                         <a href="https://www.desmos.com/calculator" target="_blank" class="btn btn-primary"><span>פתח Desmos</span></a>
                         <a href="https://www.desmos.com/geometry" target="_blank" class="btn btn-info" style="margin-right: 10px;"><span>Desmos Geometry</span></a>
-  </div>
+                    </div>
 
                     <div class="card">
                         <span class="card-icon">🔷</span>
@@ -723,10 +854,23 @@
                             וחישוב. מצוין ליצירת הדמיות אינטראקטיביות ולמידה מתמטיקה 
                             בצורה ויזואלית!
                         </div>
+                        <div class="instructions-box">
+                            <div class="instructions-title">איך להשתמש:</div>
+                            <div class="instructions-text">
+                                <ul>
+                                    <li><strong>פתח GeoGebra:</strong> מחשבון גרפי מתקדם עם כלים נוספים</li>
+                                    <li><strong>GeoGebra Geometry:</strong> כלי גיאומטריה דינמי - ציור, בנייה, מדידות</li>
+                                    <li><strong>יצירת הדמיה:</strong> בנה צורות, העבר נקודות, ראה שינוי בזמן אמת</li>
+                                    <li><strong>שמירה:</strong> לחץ על "File" → "Export" לשמירת תמונה או PDF</li>
+                                    <li><strong>שיתוף:</strong> לחץ על "Share" כדי לקבל קישור</li>
+                                    <li><strong>✅ חינמי לחלוטין</strong> - ניתן להירשם בחינם לשירותים נוספים</li>
+                                </ul>
+                            </div>
+                        </div>
                         <span class="status-badge status-ready">חינמי וחזק</span>
                         <a href="https://www.geogebra.org/calculator" target="_blank" class="btn btn-success"><span>פתח GeoGebra</span></a>
                         <a href="https://www.geogebra.org/geometry" target="_blank" class="btn btn-info" style="margin-right: 10px;"><span>GeoGebra Geometry</span></a>
-</div>
+                    </div>
 
                     <div class="card">
                         <span class="card-icon">📖</span>
