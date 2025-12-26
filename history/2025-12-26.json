@@ -142,6 +142,15 @@
 
                                         ],
                         "user":  "yaniv"
+                    },
+                    {
+                        "time":  "2025-12-26 13:06:12",
+                        "system":  "MIZRACHI",
+                        "filesChanged":  0,
+                        "fileDetails":  [
+
+                                        ],
+                        "user":  "yaniv"
                     }
                 ],
     "notes":  [
@@ -168,9 +177,9 @@
                          },
                          {
                              "firstTime":  "2025-12-26 09:47:47",
-                             "status":  "Modified",
+                             "status":  "Added",
                              "lastTime":  "2025-12-26 09:58:37",
-                             "file":  ".gitignore"
+                             "file":  "\"Math Worksheets System.url\""
                          },
                          {
                              "firstTime":  "2025-12-26 09:58:37",
@@ -179,16 +188,10 @@
                              "file":  "ADD_TASK.ps1"
                          },
                          {
-                             "firstTime":  "2025-12-26 09:58:37",
-                             "status":  "Added",
-                             "lastTime":  "2025-12-26 09:58:37",
-                             "file":  "history/.gitkeep"
-                         },
-                         {
                              "firstTime":  "2025-12-26 09:47:47",
-                             "status":  "Added",
+                             "status":  "Modified",
                              "lastTime":  "2025-12-26 09:58:37",
-                             "file":  "\"Math Worksheets System.url\""
+                             "file":  ".vscode/latex.json"
                          },
                          {
                              "firstTime":  "2025-12-26 09:47:47",
@@ -209,16 +212,22 @@
                              "file":  "VIEW_HISTORY.ps1"
                          },
                          {
-                             "firstTime":  "2025-12-26 09:47:47",
-                             "status":  "Modified",
+                             "firstTime":  "2025-12-26 09:58:37",
+                             "status":  "Added",
                              "lastTime":  "2025-12-26 09:58:37",
-                             "file":  ".vscode/latex.json"
+                             "file":  "history/.gitkeep"
                          },
                          {
                              "firstTime":  "2025-12-26 09:58:37",
                              "status":  "Added",
                              "lastTime":  "2025-12-26 09:58:37",
                              "file":  "HISTORY_SYSTEM.md"
+                         },
+                         {
+                             "firstTime":  "2025-12-26 09:47:47",
+                             "status":  "Modified",
+                             "lastTime":  "2025-12-26 09:58:37",
+                             "file":  ".gitignore"
                          },
                          {
                              "firstTime":  "2025-12-26 09:47:47",
